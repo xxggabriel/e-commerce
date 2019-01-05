@@ -7,7 +7,8 @@
     "authors": [
         {
             "name" : "Gabriel Oliveira",
-            "email" : "gabrieloliveiradesouza9@gmail.com"
+            "email" : "gabrieloliveiradesouza9@gmail.com",
+            "role": "Developer"
         }
     ],
     "autoload": {
