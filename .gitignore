@@ -1,0 +1,4 @@
+app/views/cache/*
+/test
+/vendor/
+config/FileConfig.php
