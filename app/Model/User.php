@@ -36,12 +36,12 @@ class User
     public function read($id_user = null)
     {
         $sql = new Sql();
-        return $sql->query("CALL get_user(:id_user)",[
+        return $sql->select("CALL get_user(:id_user)",[
             ":id_user" => $this->getId_user()
         ]);   
     }
 
-    public function update($id_user, $data)
+    public function update($id_user, $data = array())
     {
         $sql = new Sql();
 
