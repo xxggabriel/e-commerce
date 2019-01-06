@@ -36,7 +36,7 @@ class User
     public function read($id_user = null)
     {
         $sql = new Sql();
-        return $sql->select("CALL get_user(:id_user)",[
+        return $sql->select("CALL read_user(:id_user)",[
             ":id_user" => $this->getId_user()
         ]);   
     }
