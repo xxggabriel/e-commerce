@@ -1,7 +1,7 @@
 {
     "name": "gabriel/e-commerce",
     "require": {
-        "slim/slim": "2.0",
+        "slim/slim": "^3.0",
         "rain/raintpl": "^3.1"
     },
     "authors": [
