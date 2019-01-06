@@ -2,7 +2,6 @@
 
 namespace Config;
 
-require_once "FileConfig.php";
 
 class Config
 {
