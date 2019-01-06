@@ -11,11 +11,18 @@
             "role": "Developer"
         }
     ],
+    "description": "Um projeto de loja virtual.",
     "autoload": {
         "psr-4": {
             "App\\" : "app\\",
             "Config\\" : "config\\"
              
         }
+    },
+    "scripts": {
+        "post-install-cmd": [
+            "@php -r \"file_exists(config/example.FileConfig.php) || copy('config/example.FileConfig.php.example', 'config/FileConfig.php');\""
+        ],
+        "clearCache": "rm -rf cache/*"
     }
 }
