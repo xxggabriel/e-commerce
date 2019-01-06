@@ -54,11 +54,11 @@ class Sql
 
 	public function backup()
 	{
-		$config = new Config;
-		exec("mysqldump --routines -u ".$config->getDatabase("USER")." -p". $config->getDatabase("PASSWORD")." ".$config->getDatabase("DB_NAME") ."> ". $_SERVER["DOCUMENT_ROOT"] . "/app/Model/DB/Backups/backup-".date("Y-m-d_H:i:s").".sql");
+		$config = new FileConfig;
+		exec("mysqldump --routines -u ".$config->getDatabase("USER")." -p". $config->getDatabase("PASSWORD")." ".$config->getDatabase("DB_NAME") ."> ". __DIR__ . "/Backups/backup-".date("Y-m-d_H:i:s").".sql");
 		
 		// sleep(5);
-		exec("git add ".$_SERVER["DOCUMENT_ROOT"] . "/app/Models/DB/Backups/*");
+		exec("git add ".__DIR__ . "/Backups/*");
 		exec("git commit -m 'Backup do banco de dados '". date("Y/m/d"));
 		exec("git push origin master");
 		
