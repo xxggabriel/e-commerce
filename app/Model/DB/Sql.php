@@ -10,7 +10,6 @@ class Sql
     private $conn;
     public function __construct()
     {
-		header("Content-Type: text/html; charset=UTF-8",true);
         try {
             $config = new FileConfig();
             $this->conn = new \PDO('mysql:host='.$config->getDatabase('HOST').
