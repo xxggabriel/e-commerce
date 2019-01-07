@@ -20,8 +20,8 @@ class Page
         $this->options = array_merge($this->default,$opts);
         // config
         $config = array(
-            "tpl_dir"       => $_SERVER['DOCUMENT_ROOT']."/../app/Views/".$tpl_dir,
-            "cache_dir"     => $_SERVER['DOCUMENT_ROOT']."/../app/Views/cache/",
+            "tpl_dir"       => __DIR__."/../Views/".$tpl_dir,
+            "cache_dir"     => __DIR__."/../Views/cache/",
             "debug"         => false, // set to false to improve the speed
         );
 
