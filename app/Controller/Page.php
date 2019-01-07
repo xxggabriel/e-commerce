@@ -10,7 +10,7 @@ class Page
     private $default = [
         "header" => true,
         "footer" => true,
-        "sidebar" => true
+        "sidebar" => false
     ];
     private $options = [];
     private $tpl;
