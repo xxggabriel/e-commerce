@@ -3,7 +3,7 @@
 namespace App\Controller\Views;
 
 use App\Controller\PageAdmin;
-
+use App\Model\User;
 class ClassSiteAdmin 
 {
 
@@ -66,8 +66,14 @@ class ClassSiteAdmin
 
     public function createUser($request, $response, $args)
     {
-        if(!empty($_SERVER['REQUEST_METHOD'] === 'POST')){
-            
+        
+        if($request->isPost()){
+            // var_dump($request->getParsedBody());exit;
+            $data = $request->getParsedBody();
+            $user = new User();
+            $user->create($data);
+            header("Location: /app/admin/user");
+            exit;
         }
         $page = new PageAdmin();
         return $page->setTpl('create-user');
@@ -75,7 +81,7 @@ class ClassSiteAdmin
 
     public function createProvider($request, $response, $args)
     {
-        if(!empty($_SERVER['REQUEST_METHOD'] === 'POST')){
+        if($request->isPost()){
             
         }
         $page = new PageAdmin();
@@ -140,7 +146,7 @@ class ClassSiteAdmin
 
     public function updateUser($request, $response, $args)
     {
-        if(!empty($_SERVER['REQUEST_METHOD'] === 'POST')){
+        if($request->isPost()){
             
         }
         $page = new PageAdmin();
@@ -149,7 +155,7 @@ class ClassSiteAdmin
 
     public function updateProvider($request, $response, $args)
     {
-        if(!empty($_SERVER['REQUEST_METHOD'] === 'POST')){
+        if($request->isPost()){
             
         }
         $page = new PageAdmin();
@@ -179,7 +185,7 @@ class ClassSiteAdmin
 
     public function deleteUser($request, $response, $args)
     {
-        if(!empty($_SERVER['REQUEST_METHOD'] === 'POST')){
+        if($request->isPost()){
             
         }
 
@@ -188,7 +194,7 @@ class ClassSiteAdmin
 
     public function deleteProvider($request, $response, $args)
     {
-        if(!empty($_SERVER['REQUEST_METHOD'] === 'POST')){
+        if($request->isPost()){
             
         }
 
