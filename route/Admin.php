@@ -8,7 +8,7 @@ $app->group('/app/admin',function (\Slim\App $app){
         $app->get('', \App\Controller\Views\ClassSiteAdmin::class.':user')->setName('index-user-admin');
     
         $app->get('/create', \App\Controller\Views\ClassSiteAdmin::class.':createUser')->setName('create-user-admin');
-        $app->post('/create', \App\Controller\Views\ClassSiteAdmin::class.':create');
+        $app->post('/create', \App\Controller\Views\ClassSiteAdmin::class.':createUser');
     
         $app->get('/{id}', \App\Controller\Views\ClassSiteAdmin::class.':readUser')->setName('read-user-admin');
         $app->post('/{id}', \App\Controller\Views\ClassSiteAdmin::class.':read');
@@ -22,8 +22,8 @@ $app->group('/app/admin',function (\Slim\App $app){
     $app->group('/product',function(\Slim\App $app){
         $app->get('', \App\Controller\Views\ClassSiteAdmin::class.':product')->setName('product-admin');
 
-        $app->get('create', \App\Controller\Views\ClassSiteAdmin::class.':createProduct')->setName('product-create-admin');
-        $app->post('create', \App\Controller\Views\ClassSiteAdmin::class.':createProduct');
+        $app->get('/create', \App\Controller\Views\ClassSiteAdmin::class.':createProduct')->setName('product-create-admin');
+        $app->post('/create', \App\Controller\Views\ClassSiteAdmin::class.':createProduct');
 
         $app->get('/{id}', \App\Controller\Views\ClassSiteAdmin::class.':readProduct')->setName('product-read-admin');
         $app->post('/{id}', \App\Controller\Views\ClassSiteAdmin::class.':readProduct');
