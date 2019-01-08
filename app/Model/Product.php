@@ -8,31 +8,33 @@ class Product
 {
 
     private $name,
-            $title,
-            $description,
-            $promotion,
-            $amount,
-            $cost_value,
-            $sale_value,
-            $id_brand,
-            $id_provider,
-            $id_category;
+            $title       = "Sem titulo",
+            $description = "Sem descrição",
+            $promotion   = 0,
+            $amount      = 1,
+            $cost_value  = 0,
+            $sale_value  = 0,
+            $id_brand    = null,
+            $id_provider = null,
+            $id_category = null;
 
 
-    public function create($name, $sale_value ,$title = null, $description = null, $promotion = null, $amount = null, $cost_value = null, $id_brand = null, $id_provider = null, $id_category = null)
+    public function create($data)
     {
         $sql = new Sql();
 
-        $this->setName($name);
-        $this->setTitle($title);
-        $this->setDescription($description);
-        $this->setPromotion($promotion);
-        $this->setAmount($amount);
-        $this->setCost_value($cost_value);
-        $this->setSale_value($sale_value);
-        $this->setId_brand($id_brand);
-        $this->setId_category($id_category);
-        $this->setId_category($id_category);
+        $this->setName(!empty($data['name'])?$data['name']:null);
+        $this->setTitle(!empty($data['title'])?$data['title']:null);
+        $this->setDescription(!empty($data['description'])?$data['description']:null);
+        $this->setPromotion(!empty($data['promotion'])?$data['promotion']:null);
+        $this->setAmount(!empty($data['amount'])?$data['amount']:null);
+        $this->setCost_value(!empty($data['cost_value'])?$data['cost_value']:null);
+        $this->setSale_value(!empty($data['sale_value'])?$data['sale_value']:null);
+        $this->setId_brand(!empty($data['id_brand'])?$data['id_brand']:null);
+        $this->setId_category(!empty($data['id_category'])?$data['id_category']:null);
+        $this->setId_provider(!empty($data['id_provider'])?$data['id_provider']:null);
+
+
 
         $sql->query("CALL create_product(:name, :title, :description, :promotion, :amount, :cost_value, :sale_value, :id_brand, :id_provider, :id_category)",[
             ":name" => $this->getName(),
@@ -43,8 +45,8 @@ class Product
             ":cost_value" => $this->getCost_value(),
             ":sale_value" => $this->getSale_value(),
             ":id_brand" => $this->getId_brand(),
-            ":id_provider" => $this->getId_brand(),
-            ":id_category" => $this->getId_brand()
+            ":id_provider" => $this->getId_provider(),
+            ":id_category" => $this->getId_category()
         ]);
     }
 
@@ -96,9 +98,8 @@ class Product
      */ 
     public function setId_category($id_category)
     {
-        $this->id_category = $id_category;
+        $this->id_category = (int)$id_category;
 
-        return $this;
     }
 
     /**
@@ -116,9 +117,8 @@ class Product
      */ 
     public function setId_provider($id_provider)
     {
-        $this->id_provider = $id_provider;
+        $this->id_provider = (int)$id_provider;
 
-        return $this;
     }
 
     /**
@@ -136,9 +136,8 @@ class Product
      */ 
     public function setId_brand($id_brand)
     {
-        $this->id_brand = $id_brand;
+        $this->id_brand = (int)$id_brand;
 
-        return $this;
     }
 
     /**
@@ -158,7 +157,6 @@ class Product
     {
         $this->name = $name;
 
-        return $this;
     }
 
     /**
@@ -178,7 +176,6 @@ class Product
     {
         $this->title = $title;
 
-        return $this;
     }
 
     /**
@@ -198,7 +195,6 @@ class Product
     {
         $this->description = $description;
 
-        return $this;
     }
 
     /**
@@ -216,9 +212,8 @@ class Product
      */ 
     public function setPromotion($promotion)
     {
-        $this->promotion = $promotion;
+        $this->promotion = (double)$promotion;
 
-        return $this;
     }
 
     /**
@@ -236,9 +231,8 @@ class Product
      */ 
     public function setAmount($amount)
     {
-        $this->amount = $amount;
+        $this->amount = (int)$amount;
 
-        return $this;
     }
 
     /**
@@ -256,9 +250,8 @@ class Product
      */ 
     public function setCost_value($cost_value)
     {
-        $this->cost_value = $cost_value;
+        $this->cost_value = (double)$cost_value;
 
-        return $this;
     }
 
     /**
@@ -276,8 +269,7 @@ class Product
      */ 
     public function setSale_value($sale_value)
     {
-        $this->sale_value = $sale_value;
+        $this->sale_value = (double)$sale_value;
 
-        return $this;
     }
 }
