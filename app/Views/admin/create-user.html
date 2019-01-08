@@ -1,1 +1,59 @@
-Create Admin
+<div class="col-ms-12 stretch-card">
+    <div class="card">
+        <div class="card-body">
+            <div class="card-title">
+                <h4>Cadastrar Usuário</h4>
+            </div>
+            <div class="description">
+                <p></p>Cadastre um usuário</div>
+            
+            <form action="/app/admin/user/create" method="POST" class="forms-sample md-form" enctype="multipart/form-data">
+                <div class="form-group">
+                    <label for="name">Nome:</label>
+                    <input type="text" class="form-control" name="name">
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Email:</label>
+                    <input type="email" class="form-control" name="email">
+                </div>
+                <div class="form-group">
+                    <label for="password">Senha:</label>
+                    <input type="password" class="form-control" name="password">
+                </div>
+               <div class="form-control">
+                    <div class="form-group">
+                            <label for="photo">Foto</label>
+                            <input type="file" class="form-control-file" name="photo" id="photo">
+                            <br/>
+                            <img id="img" style="width: 200px;height: 200px">
+                    </div>
+               </div>
+
+                <div class="form-check form-check-flat">
+                    <label class="form-check-label">
+                        <input type="checkbox" class="form-check-input" name="status" value="3"> Admin:
+                    <i class="input-helper"></i></label>
+                </div>
+
+               
+                    <button type="submit" class="btn btn-success btn-lg">Cadastrar</button>
+                
+                </div>
+            
+            </form>
+        </div>
+    </div>
+
+  <script>
+      $(function(){
+          $('#photo').change(function(){
+              const file = $(this)[0].files[0]
+              const fileReader = new FileReader()
+              fileReader.onloadend = function(){
+                  $('#img').attr('src',fileReader.result)
+              }
+              fileReader.readAsDataURL(file)
+          })
+      })
+  </script>

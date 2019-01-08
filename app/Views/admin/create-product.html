@@ -1,0 +1,111 @@
+<div class="card">
+    <div class="card-body">
+        <div class="card-title">
+            <h4>Cadastrar produto</h4>
+        </div>
+        <div class="card-description">
+            <p>Cadastre um novo prduto</p>
+        </div>
+        <form action="/app/admin/product/create" class="forms-sample md-form" method="post" enctype="multipart/form-data">
+            <div class="form-group">
+                <label for="">Nome:</label>
+                <input type="txt" name="name" class="form-control">
+            </div>
+
+            <div class="form-group">
+                <label for="">Title:</label>
+                <input type="txt" name="title" class="form-control">
+            </div>
+
+            <div class="form-group">
+                <label for="">Valor Custo</label>
+                <div class="input-group">   
+                    <div class="input-group-prepend bg-primary border-primary">
+                        <samp class="input-group-text bg-transparent text-white">
+                            R$
+                        </samp>
+                        <input type="number" name="cost_value" step="0.01"  value="0.00" class="form-control">
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="">Valor venda:</label>
+                <div class="input-group">   
+                    <div class="input-group-prepend bg-primary border-primary">
+                        <samp class="input-group-text bg-transparent text-white">
+                            R$
+                        </samp>
+                        <input type="number" name="sale_value" value="0.00" step="0.01" class="form-control">
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                    <!-- <label for="">Quantidade:</label> -->
+                    <div class="input-group">   
+                        <div class="input-group-prepend bg-primary border-primary">
+                            <samp class="input-group-text bg-transparent text-white">
+                                Quantidade
+                            </samp>
+                            <input type="number" name="amount" step=1 value="1" class="form-control">
+                        </div>
+                    </div>
+            </div>
+            <div class="form-group">
+                    <label for="">Desconto</label>  
+                    <div class="input-group"> 
+                        <div class="input-group-prepend bg-primary border-primary">
+                            <samp class="input-group-text bg-transparent text-white">
+                                %
+                            </samp>
+                            <input type="number" name="promotion" step="0.01" value="0" class="form-control">
+                        </div>
+                    </div>
+            </div>
+            <div class="form-group">
+                <label for="">Fornecador:</label>
+                <select name="id_provider" class="form-control form-control-lg">
+                    <option value="null">Sem fornecedor</option>
+                    {*loop="provider"*}
+                    <option value="{*$value.id_provider*}" >{*$value.name*}</option>
+                    {*/loop*}
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="">Marca:</label>
+                <select name="id_brand" class="form-control form-control-lg">
+                    <option value="null">Sem marca</option>
+                    {*loop="brand"*}
+                    <option value="{*$value.id_brand*}" >{*$value.name*}</option>
+                    {*/loop*}
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="">Categoria:</label>
+                <select name="id_category" class="form-control form-control-lg">
+                    <option value="null">Sem vategoria</option>
+                    {*loop="category"*}
+                    <option value="{*$value.id_category*}" >{*$value.name*}</option>
+                    {*/loop*}
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="">Descrição</label>
+                <textarea id="editor" name="description"></textarea>
+            </div>
+
+            <button type="submit" class="btn btn-success btn-sm">Cadastrar</button>
+        </form>
+    </div>
+</div>
+
+<script>
+    ClassicEditor
+        .create( document.querySelector( '#editor' ) )
+        .catch( error => {
+            console.error( error );
+        } );
+</script>
