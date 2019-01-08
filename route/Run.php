@@ -7,6 +7,11 @@ $c = new \Slim\Container(); //Create Your container
 
 //Override the default Not Found Handler before creating App
 
+$config = [
+    'settings' => [
+        'displayErrorDetails' => true # change this <------
+    ],
+];
 $c['notFoundHandler'] = function ($c) {
     return function ($request, $response) use ($c) {
         $page = new Page(['sidebar'=>false]);
@@ -15,7 +20,7 @@ $c['notFoundHandler'] = function ($c) {
     };
 };
 
-$app = new App($c);
+$app = new App($config);
 include_once "Admin.php";
 include_once "Web.php";
 
