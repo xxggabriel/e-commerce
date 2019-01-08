@@ -15,20 +15,21 @@ class User
     
     
 
-    public function create($name, $email, $password, $photo = null, $status = null)
+    public function create($data = array())
     {
-        $this->setName($name);
-        $this->setEmail($email);
-        $this->setPassword($password);
-        $this->setPhoto($photo);
-        $this->setStatus($status);
+        $this->setName(!empty($data['name'])? $data['name'] : null);
+        $this->setEmail(!empty($data['email'])? $data['email'] : null);
+        $this->setPassword(!empty($data['password'])? $data['name'] : null);
+        $this->setPhoto(!empty($_FILES['photo'])? $_FILES['photo']: null);
+        $this->setStatus(!empty($data['status'])? $data['status'] : null);
 
         $sql = new Sql();
+        
         $sql->query("CALL create_user(:name, :email, :password, :photo, :status)", [
             ":name" => $this->getName(),
             ":email" => $this->getEmail(),
             ":password" => $this->getPassword(),
-            ":photo" => $this->setPhoto(),
+            ":photo" => $this->getPhoto(),
             ":status" => $this->getStatus()
         ]);
     }
@@ -61,6 +62,26 @@ class User
            
                 
         }
+    }
+
+    public function savePhoto($photo)
+    {
+        if(!empty($photo)){
+            $image = str_replace(' ','-', $photo['name']);
+            if(!empty($image)) { 
+                $finalName = 'uploads/img/user/'.$image.'-'.time().'.jpg';
+                if (!move_uploaded_file($photo['tmp_name'], $finalName)) {             
+                    throw new \Exception("Erro ao salvar a imagem."); 
+                }
+                return $finalName;
+            } 
+            else { 
+                throw new \Exception("Você não realizou o upload de forma satisfatória."); 
+                
+            }      
+        }
+            
+        
     }
 
     public function delete($id_user)
@@ -162,7 +183,8 @@ class User
      */ 
     public function setPhoto($photo = null)
     {
-        $this->photo = $photo;
+        ;
+        $this->photo = $this->savePhoto($photo);
 
     }
 
