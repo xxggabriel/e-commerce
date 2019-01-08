@@ -11,6 +11,7 @@
                         <p class="card-description">
                             lista de marcas
                         </p>
+                        <p><button type="button" class="btn btn-success btn-sm"><a href="/app/admin/brand/create">Cadastrar marca</a></button></p>
                         <div class="table-responsive">
                             <table class="table">
                                 <thead>
@@ -23,6 +24,9 @@
                                     <tr>
                                         <td>1</td>
                                         <td class="limit-text-table">Google</td>
+                                        <td><button type="button" class="btn btn-primary btn-rounded btn-sm"><a href="/app/admin/{*$value.id_brand*}">Editar</a></button>
+                                            <button type="button" class="btn btn-danger btn-rounded btn-sm"><a href="/app/admin/{*$value.id_brand*}/delete">Editar</a></button>
+                                        </td>
                                     </tr>
                                 </tbody>
                             </table>

@@ -11,6 +11,7 @@
                         <p class="card-description">
                             lista de Produtos
                         </p>
+                        <p><button type="button" class="btn btn-success btn-sm"><a href="/app/admin/product/create">Cadastrar produto</a></button></p>
                         <div class="table-responsive">
                             <table class="table">
                                 <thead>
@@ -29,6 +30,9 @@
                                         <td>426.45</td>
                                         <td>799.99</td>
                                         <td>12</td>
+                                        <td><button type="button" class="btn btn-primary btn-rounded btn-sm"><a href="/app/admin/{*$value.id_product*}">Editar</a></button>
+                                            <button type="button" class="btn btn-danger btn-rounded btn-sm"><a href="/app/admin/{*$value.id_product*}/delete">Editar</a></button>
+                                        </td>
                                     </tr>
                                 </tbody>
                             </table>
