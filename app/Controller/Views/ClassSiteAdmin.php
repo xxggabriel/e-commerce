@@ -144,8 +144,17 @@ class ClassSiteAdmin
 
     public function updateBrand($request, $response, $args)
     {  
+        $brand = new Brand();
+        if($request->isPost()){
+            $brand->update((int)$args['id'],$request->getParsedBody());
+            header('Location: /app/admin/brand');
+            exit;
+        }
         $page = new PageAdmin();
-        $page->setTpl('index');
+        $page->setTpl('update-brand',[    
+            "brand" => $brand->read((int)$args['id'])[0]
+            
+        ]);
     }
 
     public function updateCategory($request, $response, $args)

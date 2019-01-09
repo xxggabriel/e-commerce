@@ -11,7 +11,7 @@
                         <p class="card-description">
                             lista de marcas
                         </p>
-                        <p><button type="button" class="btn btn-success btn-sm"><a href="/app/admin/brand/create">Cadastrar marca</a></button></p>
+                        <p><a href="/app/admin/brand/create"><button type="button" class="btn btn-success btn-sm">Cadastrar marca</button></a></p>
                         <div class="table-responsive">
                             <table class="table">
                                 <thead>
@@ -25,8 +25,8 @@
                                     <tr>
                                         <td>{$value.id_brand}</td>
                                         <td class="limit-text-table">{$value.name}</td>
-                                        <td><button type="button" class="btn btn-primary btn-rounded btn-sm"><a href="/app/admin/brand/{$value.id_brand}">Editar</a></button>
-                                            <button type="button" class="btn btn-danger btn-rounded btn-sm"><a href="/app/admin/brand/{$value.id_brand}/delete">Excluir</a></button>
+                                        <td><a href="/app/admin/brand/{$value.id_brand}"><button type="button" class="btn btn-primary btn-rounded btn-sm">Editar</button></a>
+                                            <a href="/app/admin/brand/{$value.id_brand}/delete"><button type="button" class="btn btn-danger btn-rounded btn-sm">Excluir</button></a>
                                         </td>
                                     </tr>
                                     {/loop}

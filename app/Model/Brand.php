@@ -33,6 +33,17 @@ class Brand extends Controller
     public function update($id_brand, $data = array())
     {
         $sql = new Sql();
+
+        if(!empty($_FILES['logo']['tmp_name'])){
+            $this->setLogo($_FILES['logo']);
+            $value = $this->getLogo();
+            $sql->query("UPDATE tb_brand 
+                    SET logo = :value
+                    WHERE id_brand = :id_brand",[
+            ":value" => $value,
+            ":id_brand" => $id_brand
+        ]);
+        }
         foreach($data as $key => $value){        
             
             $sql->query("UPDATE tb_brand 
