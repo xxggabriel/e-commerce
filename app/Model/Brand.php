@@ -3,15 +3,16 @@
 namespace App\Model;
 
 use App\Model\DB\Sql;
+use App\Controller\Controller;
 
-class Brand 
+class Brand extends Controller
 {
     private $name, $logo;
 
-    public function create($name, $logo = null)
+    public function create($data = array())
     {
-        $this->setName($name);
-        $this->setLogo($logo);
+        $this->setName(!empty($data['name'])?$data['name']:NULL);
+        $this->setLogo(!empty($_FILES['logo'])?$_FILES['logo']:NULL);
         $sql = new Sql();
 
         $sql->query("CALL create_brand(:name, :logo)", [
@@ -89,7 +90,7 @@ class Brand
      */ 
     public function setLogo($logo)
     {
-        $this->logo = $logo;
+        $this->logo = $this->savePhoto($logo,'brand');
 
         
     }

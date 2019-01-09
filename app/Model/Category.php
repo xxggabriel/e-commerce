@@ -3,8 +3,9 @@
 namespace App\Model;
 
 use App\Model\DB\Sql;
+use App\Controller\Controller;
 
-class Category
+class Category extends Controller
 {
 
     private $name;

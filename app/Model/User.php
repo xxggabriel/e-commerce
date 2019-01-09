@@ -3,8 +3,9 @@
 namespace App\Model;
 
 use App\Model\DB\Sql;
+use App\Controller\Controller;
 
-class User 
+class User extends Controller
 {
     private $id_user,
             $name,
@@ -64,25 +65,6 @@ class User
         }
     }
 
-    public function savePhoto($photo)
-    {
-        if(!empty($photo)){
-            $image = str_replace(' ','-', $photo['name']);
-            if(!empty($image)) { 
-                $finalName = 'uploads/img/user/'.$image.'-'.time().'.jpg';
-                if (!move_uploaded_file($photo['tmp_name'], $finalName)) {             
-                    throw new \Exception("Erro ao salvar a imagem."); 
-                }
-                return $finalName;
-            } 
-            else { 
-                throw new \Exception("Você não realizou o upload de forma satisfatória."); 
-                
-            }      
-        }
-            
-        
-    }
 
     public function delete($id_user)
     {
@@ -184,7 +166,7 @@ class User
     public function setPhoto($photo = null)
     {
         ;
-        $this->photo = $this->savePhoto($photo);
+        $this->photo = $this->savePhoto($photo, 'user');
 
     }
 

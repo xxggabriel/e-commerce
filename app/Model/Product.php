@@ -3,8 +3,9 @@
 namespace App\Model;
 
 use App\Model\DB\Sql;
+use App\Controller\Controller;
 
-class Product 
+class Product extends Controller
 {
 
     private $name,
