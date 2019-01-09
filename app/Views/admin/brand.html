@@ -21,13 +21,15 @@
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    {loop="$brand"}
                                     <tr>
-                                        <td>1</td>
-                                        <td class="limit-text-table">Google</td>
-                                        <td><button type="button" class="btn btn-primary btn-rounded btn-sm"><a href="/app/admin/{*$value.id_brand*}">Editar</a></button>
-                                            <button type="button" class="btn btn-danger btn-rounded btn-sm"><a href="/app/admin/{*$value.id_brand*}/delete">Editar</a></button>
+                                        <td>{$value.id_brand}</td>
+                                        <td class="limit-text-table">{$value.name}</td>
+                                        <td><button type="button" class="btn btn-primary btn-rounded btn-sm"><a href="/app/admin/brand/{$value.id_brand}">Editar</a></button>
+                                            <button type="button" class="btn btn-danger btn-rounded btn-sm"><a href="/app/admin/brand/{$value.id_brand}/delete">Excluir</a></button>
                                         </td>
                                     </tr>
+                                    {/loop}
                                 </tbody>
                             </table>
                         </div>
