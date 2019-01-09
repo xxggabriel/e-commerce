@@ -23,15 +23,17 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr >
-                                        <td>1</td>
-                                        <td class="limit-text-table">Gabriel Oliveira De Souza</td>
-                                        <td class="limit-text-table">gabrieloliveradesouza9@gmail.com</td>
-                                        <td>(62) 99169-1823</td>
-                                        <td><button type="button" class="btn btn-primary btn-rounded btn-sm"><a href="/app/admin/{*$value.id_provider*}">Editar</a></button>
-                                            <button type="button" class="btn btn-danger btn-rounded btn-sm"><a href="/app/admin/{*$value.id_provider*}/delete">Editar</a></button>
+                                    {loop="$provider"}
+                                    <tr>
+                                        <td>{$value.id_provider}</td>
+                                        <td class="limit-text-table">{$value.name}</td>
+                                        <td class="limit-text-table">{$value.email}</td>
+                                        <td>{$value.phone}</td>
+                                        <td><button type="button" class="btn btn-primary btn-rounded btn-sm"><a href="/app/admin/provider/{$value.id_provider}">Editar</a></button>
+                                            <button type="button" class="btn btn-danger btn-rounded btn-sm"><a href="/app/admin/provider/{$value.id_provider}/delete">Editar</a></button>
                                         </td>
                                     </tr>
+                                    {/loop}
                                 </tbody>
                             </table>
                         </div>
