@@ -20,7 +20,7 @@ class User extends Controller
     {
         $this->setName(!empty($data['name'])? $data['name'] : null);
         $this->setEmail(!empty($data['email'])? $data['email'] : null);
-        $this->setPassword(!empty($data['password'])? $data['name'] : null);
+        $this->setPassword(!empty($data['password'])? $data['password'] : null);
         $this->setPhoto(!empty($_FILES['photo'])? $_FILES['photo']: null);
         $this->setStatus(!empty($data['status'])? $data['status'] : null);
 
@@ -37,6 +37,7 @@ class User extends Controller
 
     public function read($id_user = null)
     {
+        $this->setId_user($id_user);
         $sql = new Sql();
         return $sql->select("CALL read_user(:id_user)",[
             ":id_user" => $this->getId_user()
