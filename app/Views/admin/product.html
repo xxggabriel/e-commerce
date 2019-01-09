@@ -18,9 +18,10 @@
                                     <tr>
                                         <td>#</td>
                                         <td>Nome</td>
-                                        <td>Valor de custo</td>
-                                        <td>Valor de venda</td>
-                                        <td>Quantidade</td>
+                                        <td>Custo</td>
+                                        <td>Venda</td>
+                                        <td>Qtd</td>
+                                        <td>Desconto</td>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -31,6 +32,7 @@
                                         <td>{$value.cost_value}</td>
                                         <td>{$value.sale_value}</td>
                                         <td>{$value.amount}</td>
+                                        <td>{$value.promotion}</td>
                                         <td><a href="/app/admin/product/{$value.id_product}"><button type="button" class="btn btn-primary btn-rounded btn-sm">Editar</button></a>
                                             <a href="/app/admin/product/{$value.id_product}/delete"><button type="button" class="btn btn-danger btn-rounded btn-sm">Excluir</button></a>
                                         </td>
