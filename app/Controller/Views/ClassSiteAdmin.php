@@ -4,6 +4,9 @@ namespace App\Controller\Views;
 
 use App\Controller\PageAdmin;
 use App\Model\User;
+use App\Model\Product;
+use App\Model\Brand;
+
 class ClassSiteAdmin 
 {
 
@@ -47,14 +50,29 @@ class ClassSiteAdmin
 
     public function createProduct($request, $response, $args)
     {  
+        if($request->isPost()){
+            // var_dump($request->getParsedBody());exit;
+            $data = $request->getParsedBody();
+            $product = new Product();
+            $product->create($data);
+            header("Location: /app/admin/product");
+            exit;
+        }
         $page = new PageAdmin();
-        return $page->setTpl('index');
+        return $page->setTpl('create-product');
     }
 
     public function createBrand($request, $response, $args)
     {  
+        if($request->isPost()){
+            $data = $request->getParsedBody();
+            $brand = new Brand();
+            $brand->create($data);
+            header("Location: /app/admin/brand");
+            exit;
+        }
         $page = new PageAdmin();
-        return $page->setTpl('index');
+        return $page->setTpl('create-brand');
     }
 
     public function createCategory($request, $response, $args)
