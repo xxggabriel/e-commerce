@@ -1,0 +1,16 @@
+<div class="card">
+        <div class="card-body">
+            <div class="card-title"><h4>Atualiza Categoria</h4></div>
+        
+        <div class="card-description">
+            <p>Atualize uma nova categoria</p>
+        </div>
+        <form action="/app/admin/category/{$category.id_category}" method="post">
+            <div class="form-group">
+                <label for="">Nome da categoria: </label>
+                <input type="text" name="name" class="form-control" value="{$category.name}">
+            </div>
+            <button type="submit" class="btn btn-success btn-sm">Editar</button>
+        </form>
+    </div>
+</div>

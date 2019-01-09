@@ -11,7 +11,7 @@
                         <p class="card-description">
                             lista de Categorias
                         </p>
-                        <p><button type="button" class="btn btn-success btn-sm"><a href="/app/admin/category/create">Cadastrar category</a></button></p>
+                        <p><a href="/app/admin/category/create"><button type="button" class="btn btn-success btn-sm">Cadastrar category</button></a></p>
                         <div class="table-responsive">
                             <table class="table">
                                 <thead>
@@ -25,8 +25,8 @@
                                     <tr>
                                         <td>{$value.id_category}</td>
                                         <td class="limit-text-table">{$value.name}</td>
-                                        <td><button type="button" class="btn btn-primary btn-rounded btn-sm"><a href="/app/admin/category/{$value.id_category}">Editar</a></button>
-                                            <button type="button" class="btn btn-danger btn-rounded btn-sm"><a href="/app/admin/category/{$value.id_category}/delete">Excluir</a></button>
+                                        <td><a href="/app/admin/category/{$value.id_category}"><button type="button" class="btn btn-primary btn-rounded btn-sm">Editar</button></a>
+                                            <a href="/app/admin/category/{$value.id_category}/delete"><button type="button" class="btn btn-danger btn-rounded btn-sm">Excluir</button></a>
                                         </td>
                                     </tr>
                                     {/loop}

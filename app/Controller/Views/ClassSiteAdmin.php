@@ -163,8 +163,17 @@ class ClassSiteAdmin
 
     public function updateCategory($request, $response, $args)
     {  
+        $category = new Category();
+        if($request->isPost()){
+            $category->update((int)$args['id'],$request->getParsedBody());
+            header('Location: /app/admin/category');
+            exit;
+        }
         $page = new PageAdmin();
-        $page->setTpl('index');
+        $page->setTpl('update-category',[    
+            "category" => $category->read((int)$args['id'])[0]
+            
+        ]);
     }
 
     public function updateUser($request, $response, $args)
