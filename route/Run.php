@@ -17,6 +17,7 @@ $c['notFoundHandler'] = function ($c) {
         $page = new Page(['sidebar'=>false]);
         $page->setTpl('404');
         return $response->withStatus(404);
+        return $response->withStatus(500);
     };
 };
 
