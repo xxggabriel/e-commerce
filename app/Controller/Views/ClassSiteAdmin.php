@@ -6,6 +6,7 @@ use App\Controller\PageAdmin;
 use App\Model\User;
 use App\Model\Product;
 use App\Model\Brand;
+use App\Model\Category;
 
 class ClassSiteAdmin 
 {
@@ -77,8 +78,15 @@ class ClassSiteAdmin
 
     public function createCategory($request, $response, $args)
     {  
+        if($request->isPost()){
+            $data = $request->getParsedBody();
+            $category = new Category();
+            $category->create($data);
+            header("Location: /app/admin/category");
+            exit;
+        }
         $page = new PageAdmin();
-        return $page->setTpl('index');
+        return $page->setTpl('create-category');
     }
 
 

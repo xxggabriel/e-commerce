@@ -10,9 +10,9 @@ class Category extends Controller
 
     private $name;
 
-    public function create($name)
+    public function create($data = array())
     {
-        $this->setname($name);
+        $this->setname(!empty($data['name'])?$data['name']:null);
         $sql = new Sql();
 
         $sql->query("CALL create_category(:name)", [
