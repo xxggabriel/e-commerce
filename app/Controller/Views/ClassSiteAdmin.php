@@ -7,6 +7,7 @@ use App\Model\User;
 use App\Model\Product;
 use App\Model\Brand;
 use App\Model\Category;
+use App\Model\Provider;
 
 class ClassSiteAdmin 
 {
@@ -14,19 +15,25 @@ class ClassSiteAdmin
     public function index($request, $response, $args)
     {  
         $page = new PageAdmin();
-        return $page->setTpl('index');
+        $page->setTpl('index');
     }
 
     public function product($request, $response, $args)
     {  
+        $product = new Product();
         $page = new PageAdmin();
-        return $page->setTpl('product');
+        $page->setTpl('product',[
+            "product" => $product->read()
+        ]);
     }
 
     public function brand($request, $response, $args)
     {  
+        $brand = new Brand();
         $page = new PageAdmin();
-        return $page->setTpl('brand');
+        $page->setTpl('brand',[
+            "brand" => $brand->read()
+        ]);
     }
 
     public function user($request, $response, $args)
@@ -42,14 +49,20 @@ class ClassSiteAdmin
 
     public function category($request, $response, $args)
     {  
+        $category = new Category();
         $page = new PageAdmin();
-        return $page->setTpl('category');
+        $page->setTpl('category',[
+            "category" => $category->read()
+        ]);
     }
 
     public function provider($request, $response, $args)
     {  
+        $provider = new Provider();
         $page = new PageAdmin();
-        return $page->setTpl('provider');
+        $page->setTpl('provider',[
+            "provider" => $provider->read()
+        ]);
     }
 
     // Create
@@ -65,7 +78,7 @@ class ClassSiteAdmin
             exit;
         }
         $page = new PageAdmin();
-        return $page->setTpl('create-product');
+        $page->setTpl('create-product');
     }
 
     public function createBrand($request, $response, $args)
@@ -78,7 +91,7 @@ class ClassSiteAdmin
             exit;
         }
         $page = new PageAdmin();
-        return $page->setTpl('create-brand');
+        $page->setTpl('create-brand');
     }
 
     public function createCategory($request, $response, $args)
@@ -91,7 +104,7 @@ class ClassSiteAdmin
             exit;
         }
         $page = new PageAdmin();
-        return $page->setTpl('create-category');
+        $page->setTpl('create-category');
     }
 
 
@@ -107,7 +120,7 @@ class ClassSiteAdmin
             exit;
         }
         $page = new PageAdmin();
-        return $page->setTpl('create-user');
+        $page->setTpl('create-user');
     }
 
     public function createProvider($request, $response, $args)
@@ -116,7 +129,7 @@ class ClassSiteAdmin
             
         }
         $page = new PageAdmin();
-        return $page->setTpl('create-provider');
+        $page->setTpl('create-provider');
     }
 
     // END Create 
@@ -126,26 +139,26 @@ class ClassSiteAdmin
     public function readProduct($request, $response, $args)
     {  
         $page = new PageAdmin();
-        return $page->setTpl('index');
+        $page->setTpl('index');
     }
 
     public function readBrand($request, $response, $args)
     {  
         $page = new PageAdmin();
-        return $page->setTpl('index');
+        $page->setTpl('index');
     }
 
     public function readCategory($request, $response, $args)
     {  
         $page = new PageAdmin();
-        return $page->setTpl('index');
+        $page->setTpl('index');
     }
 
     public function readUser($request, $response, $args)
     {  
         $user = new User();
         $page = new PageAdmin();
-        return $page->setTpl('index', [
+        $page->setTpl('index', [
             "user" => $user->read($args['id'])
         ]);
     }
@@ -153,7 +166,7 @@ class ClassSiteAdmin
     public function readProvider($request, $response, $args)
     {  
         $page = new PageAdmin();
-        return $page->setTpl('index');
+        $page->setTpl('index');
     }
 
     // END Read
@@ -163,19 +176,19 @@ class ClassSiteAdmin
     public function updateProduct($request, $response, $args)
     {  
         $page = new PageAdmin();
-        return $page->setTpl('index');
+        $page->setTpl('index');
     }
 
     public function updateBrand($request, $response, $args)
     {  
         $page = new PageAdmin();
-        return $page->setTpl('index');
+        $page->setTpl('index');
     }
 
     public function updateCategory($request, $response, $args)
     {  
         $page = new PageAdmin();
-        return $page->setTpl('index');
+        $page->setTpl('index');
     }
 
     public function updateUser($request, $response, $args)
@@ -184,7 +197,7 @@ class ClassSiteAdmin
             
         }
         $page = new PageAdmin();
-        return $page->setTpl('update-user');
+        $page->setTpl('update-user');
     }
 
     public function updateProvider($request, $response, $args)
@@ -193,7 +206,7 @@ class ClassSiteAdmin
             
         }
         $page = new PageAdmin();
-        return $page->setTpl('update-provider');
+        $page->setTpl('update-provider');
     }
     // END Update
 
@@ -201,20 +214,26 @@ class ClassSiteAdmin
 
     public function deleteProduct($request, $response, $args)
     {  
-        $page = new PageAdmin();
-        return $page->setTpl('index');
+        $product = new Product();
+        $product->delete((int)$args['id']);
+        header('Location: /app/admin/product');
+        exit;
     }
 
     public function deleteBrand($request, $response, $args)
     {  
-        $page = new PageAdmin();
-        return $page->setTpl('index');
+        $brand = new Brand();
+        $brand->delete((int)$args['id']);
+        header('Location: /app/admin/brand');
+        exit;
     }
 
     public function deleteCategory($request, $response, $args)
     {  
-        $page = new PageAdmin();
-        return $page->setTpl('index');
+        $category = new Category();
+        $category->delete((int)$args['id']);
+        header('Location: /app/admin/category');
+        exit;
     }
 
     public function deleteUser($request, $response, $args)
@@ -227,11 +246,10 @@ class ClassSiteAdmin
 
     public function deleteProvider($request, $response, $args)
     {
-        if($request->isPost()){
-            
-        }
-
-        $this->delete((int)$args['id']);
+        $provider = new Provider();
+        $provider->delete((int)$args['id']);
+        header('Location: /app/admin/provider');
+        exit;
     }
     // END Delete
 }
