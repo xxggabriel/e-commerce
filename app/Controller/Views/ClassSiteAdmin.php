@@ -31,8 +31,13 @@ class ClassSiteAdmin
 
     public function user($request, $response, $args)
     {        
+        $user = new User();
         $page = new PageAdmin();
-        return $page->setTpl('user');
+        $page->setDataAssign([
+            "user" => $user->read()
+        ]);
+        $page->setTpl('user');
+        
     }
 
     public function category($request, $response, $args)
@@ -138,8 +143,11 @@ class ClassSiteAdmin
 
     public function readUser($request, $response, $args)
     {  
+        $user = new User();
         $page = new PageAdmin();
-        return $page->setTpl('index');
+        return $page->setTpl('index', [
+            "user" => $user->read($args['id'])
+        ]);
     }
 
     public function readProvider($request, $response, $args)
@@ -211,11 +219,10 @@ class ClassSiteAdmin
 
     public function deleteUser($request, $response, $args)
     {
-        if($request->isPost()){
-            
-        }
-
-        $this->delete((int)$args['id']);
+        $user= new User();
+        $user->delete((int)$args['id']);
+        header('Location: /app/admin/user');
+        exit;
     }
 
     public function deleteProvider($request, $response, $args)

@@ -166,7 +166,7 @@ class User extends Controller
     public function setPhoto($photo = null)
     {
         ;
-        $this->photo = $this->savePhoto($photo, 'user');
+        $this->photo = $this->savePhoto($photo,'user');
 
     }
 
