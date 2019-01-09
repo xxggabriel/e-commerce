@@ -134,43 +134,6 @@ class ClassSiteAdmin
 
     // END Create 
 
-    // Read
-
-    public function readProduct($request, $response, $args)
-    {  
-        $page = new PageAdmin();
-        $page->setTpl('index');
-    }
-
-    public function readBrand($request, $response, $args)
-    {  
-        $page = new PageAdmin();
-        $page->setTpl('index');
-    }
-
-    public function readCategory($request, $response, $args)
-    {  
-        $page = new PageAdmin();
-        $page->setTpl('index');
-    }
-
-    public function readUser($request, $response, $args)
-    {  
-        $user = new User();
-        $page = new PageAdmin();
-        $page->setTpl('index', [
-            "user" => $user->read($args['id'])
-        ]);
-    }
-
-    public function readProvider($request, $response, $args)
-    {  
-        $page = new PageAdmin();
-        $page->setTpl('index');
-    }
-
-    // END Read
-
     // Update
 
     public function updateProduct($request, $response, $args)
@@ -193,20 +156,43 @@ class ClassSiteAdmin
 
     public function updateUser($request, $response, $args)
     {
+        $user = new User();
         if($request->isPost()){
-            
+            $user->update((int)$args['id'],$request->getParsedBody());
+            header('Location: /app/admin/user');
+            exit;
         }
         $page = new PageAdmin();
-        $page->setTpl('update-user');
+        $page->setTpl('update-user',[    
+            "user" => $user->read((int)$args['id'])[0]
+            
+        ]);
+    }
+
+    public function updateUserPassword($request, $response, $args)
+    {
+        $user = new User();
+        if($request->isPost()){
+            $user->update((int)$args['id'],$request->getParsedBody());
+            header('Location: /app/admin/user');
+            exit;
+        }
+        $page = new PageAdmin();
+        $page->setTpl('update-user-password',[
+            "user" => ["id_user" => (int)$args['id']]
+        ]);
     }
 
     public function updateProvider($request, $response, $args)
     {
+        
         if($request->isPost()){
             
         }
         $page = new PageAdmin();
-        $page->setTpl('update-provider');
+        $page->setTpl('update-provider',[
+
+        ]);
     }
     // END Update
 

@@ -1,0 +1,48 @@
+<div class="card">
+    <div class="card-body">
+        <div class="card-title">
+            <h4>Atualização de usuário</h4>
+        </div>
+        <div class="card-description">
+            <p>Atualização de informaçoes do uśario</p>
+        </div>
+        
+        <form action="/app/admin/user/{$user.id_user}" enctype="multipart/form-data" method="post">
+            <div class="form-group">
+                <label for="">Nome:</label>
+                <input type="text" name="name" class="form-control" value='{if="!empty($user.name)"}{$user.name}{/if}'>
+            </div>
+
+            <div class="form-group">
+                <label for="">Email:</label>
+                <input type="email" name="email" class="form-control" value='{if="!empty($user.email)"}{$user.email}{/if}'>
+            </div>
+
+            <div class="form-group">
+                <label for="">Photo:</label>
+                <input type="file" name="photo" id="photo" class="form-control" >
+                <img src='{if="!empty($user.photo)"}/{$user.photo}{else}/uploads/img/user/sem-foto.jpg{/if}' id="img"  style="max-width: 200px; max-height: 200px;">
+            </div>
+
+            <div class="form-check form-check-flat">
+                <label class="form-check-label">
+                    <input type="checkbox" class="form-check-input" name="status" value="3" {if="$user.status == 3"} checked {/if}> Admin:
+                <i class="input-helper"></i></label>
+            </div>
+            
+            <button type="submit" class="btn btn-success btn-sm">Atualizar</button>
+        </form>
+    </div>
+</div>
+<script>
+    $(function(){
+        $('#photo').change(function(){
+            const file = $(this)[0].files[0]
+            const fileReader = new FileReader()
+            fileReader.onloadend = function(){
+                $('#img').attr('src',fileReader.result)
+            }
+            fileReader.readAsDataURL(file)
+        })
+    })
+</script>
