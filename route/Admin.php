@@ -25,11 +25,9 @@ $app->group('/app/admin',function (\Slim\App $app){
         $app->get('/create', \App\Controller\Views\ClassSiteAdmin::class.':createProduct')->setName('product-create-admin');
         $app->post('/create', \App\Controller\Views\ClassSiteAdmin::class.':createProduct');
 
-        $app->get('/{id}', \App\Controller\Views\ClassSiteAdmin::class.':readProduct')->setName('product-read-admin');
-        $app->post('/{id}', \App\Controller\Views\ClassSiteAdmin::class.':readProduct');
+        $app->get('/{id}', \App\Controller\Views\ClassSiteAdmin::class.':updateProduct')->setName('product-update-admin');
+        $app->post('/{id}', \App\Controller\Views\ClassSiteAdmin::class.':updateProduct');
 
-        $app->get('/{id}/update', \App\Controller\Views\ClassSiteAdmin::class.':updateProduct')->setName('product-update-admin');
-        $app->post('/{id}/update', \App\Controller\Views\ClassSiteAdmin::class.':updateProduct');
 
         $app->get('/{id}/delete', \App\Controller\Views\ClassSiteAdmin::class.':deleteProduct')->setName('product-delete-admin');
         
@@ -42,11 +40,8 @@ $app->group('/app/admin',function (\Slim\App $app){
         $app->get('/create', \App\Controller\Views\ClassSiteAdmin::class.':createBrand')->setName('brand-create-admin');
         $app->post('/create', \App\Controller\Views\ClassSiteAdmin::class.':createBrand');
 
-        $app->get('/{id}', \App\Controller\Views\ClassSiteAdmin::class.':readBrand')->setName('brand-read-admin');
-        $app->post('/{id}', \App\Controller\Views\ClassSiteAdmin::class.':readBrand');
-
-        $app->get('/{id}/update', \App\Controller\Views\ClassSiteAdmin::class.':updateBrand')->setName('brand-update-admin');
-        $app->post('/{id}/update', \App\Controller\Views\ClassSiteAdmin::class.':updateBrand');
+        $app->get('/{id}', \App\Controller\Views\ClassSiteAdmin::class.':updateBrand')->setName('brand-update-admin');
+        $app->post('/{id}', \App\Controller\Views\ClassSiteAdmin::class.':updateBrand');
 
         $app->get('/{id}/delete', \App\Controller\Views\ClassSiteAdmin::class.':deleteBrand')->setName('brand-delete-admin');
     });
@@ -59,11 +54,9 @@ $app->group('/app/admin',function (\Slim\App $app){
         $app->get('/create', \App\Controller\Views\ClassSiteAdmin::class.':createCategory')->setName('category-create-admin');
         $app->post('/create', \App\Controller\Views\ClassSiteAdmin::class.':createCategory');
 
-        $app->get('/{id}', \App\Controller\Views\ClassSiteAdmin::class.':readCategory')->setName('category-read-admin');
-        $app->post('/{id}', \App\Controller\Views\ClassSiteAdmin::class.':readCategory');
+        $app->get('/{id}', \App\Controller\Views\ClassSiteAdmin::class.':updateCategory')->setName('category-update-admin');
+        $app->post('/{id}', \App\Controller\Views\ClassSiteAdmin::class.':updateCategory');
 
-        $app->get('/{id}/update', \App\Controller\Views\ClassSiteAdmin::class.':updateCategory')->setName('category-update-admin');
-        $app->post('/{id}/update', \App\Controller\Views\ClassSiteAdmin::class.':updateCategory');
 
         $app->get('/{id}/delete', \App\Controller\Views\ClassSiteAdmin::class.':deleteCategory')->setName('category-delete-admin');
     });
@@ -75,12 +68,9 @@ $app->group('/app/admin',function (\Slim\App $app){
         $app->get('/create', \App\Controller\Views\ClassSiteAdmin::class.':createProvider')->setName('provider-create-admin');
         $app->post('/create', \App\Controller\Views\ClassSiteAdmin::class.':createProvider');
 
-        $app->get('/{id}', \App\Controller\Views\ClassSiteAdmin::class.':readProvider')->setName('provider-read-admin');
-        $app->post('/{id}', \App\Controller\Views\ClassSiteAdmin::class.':readProvider');
+        $app->get('/{id}', \App\Controller\Views\ClassSiteAdmin::class.':updateProvider')->setName('provider-update-admin');
+        $app->post('/{id}', \App\Controller\Views\ClassSiteAdmin::class.':updateProvider');
 
-        $app->get('/{id}/update', \App\Controller\Views\ClassSiteAdmin::class.':updateProvider')->setName('provider-update-admin');
-        $app->post('/{id}/update', \App\Controller\Views\ClassSiteAdmin::class.':updateProvider');
-
-        $app->get('/{id}/delete', \App\Controller\Views\ClassSiteAdmin::class.':deleteProvider')->setName('provider-delete-admin');
+       $app->get('/{id}/delete', \App\Controller\Views\ClassSiteAdmin::class.':deleteProvider')->setName('provider-delete-admin');
     });
 });
