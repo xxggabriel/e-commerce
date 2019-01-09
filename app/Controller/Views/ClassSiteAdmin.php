@@ -142,8 +142,28 @@ class ClassSiteAdmin
 
     public function updateProduct($request, $response, $args)
     {  
+        $product = new Product();
+        $brand = new Brand();
+        $provider = new Provider();
+        $category = new Category();
+
+        if($request->isPost()){
+            $product->update((int)$args['id'],$request->getParsedBody());
+            header('Location: /app/admin/product');
+            exit;
+        }
         $page = new PageAdmin();
-        $page->setTpl('index');
+        // var_dump($category->read($product->read((int)$args['id'])[0]['id_category'])[0]);exit;
+        $page->setTpl('update-product',[    
+            "product" => $product->read((int)$args['id'])[0],
+            "brand" => $brand->read($product->read((int)$args['id'])[0]['id_brand'])[0],
+            "provider" => $provider->read($product->read((int)$args['id'])[0]['id_provider'])[0],
+            "category" => $category->read($product->read((int)$args['id'])[0]['id_category'])[0],
+            "list_category" => $category->read(), 
+            "list_brand" => $brand->read(), 
+            "list_provider" => $provider->read(), 
+            
+        ]);
     }
 
     public function updateBrand($request, $response, $args)

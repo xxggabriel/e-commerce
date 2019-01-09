@@ -60,7 +60,7 @@ class Product extends Controller
         ]);
     }
 
-    public function updata($id_product, $data = array())
+    public function update($id_product, $data = array())
     {
         $sql = new Sql();
         foreach($data as $key => $value){

@@ -11,7 +11,7 @@
                         <p class="card-description">
                             lista de Produtos
                         </p>
-                        <p><button type="button" class="btn btn-success btn-sm"><a href="/app/admin/product/create">Cadastrar produto</a></button></p>
+                        <p><a href="/app/admin/product/create"><button type="button" class="btn btn-success btn-sm">Cadastrar produto</button></a></p>
                         <div class="table-responsive">
                             <table class="table">
                                 <thead>
@@ -31,8 +31,8 @@
                                         <td>{$value.cost_value}</td>
                                         <td>{$value.sale_value}</td>
                                         <td>{$value.amount}</td>
-                                        <td><button type="button" class="btn btn-primary btn-rounded btn-sm"><a href="/app/admin/product/{$value.id_product}">Editar</a></button>
-                                            <button type="button" class="btn btn-danger btn-rounded btn-sm"><a href="/app/admin/product/{$value.id_product}/delete">Excluir</a></button>
+                                        <td><a href="/app/admin/product/{$value.id_product}"><button type="button" class="btn btn-primary btn-rounded btn-sm">Editar</button></a>
+                                            <a href="/app/admin/product/{$value.id_product}/delete"><button type="button" class="btn btn-danger btn-rounded btn-sm">Excluir</button></a>
                                         </td>
                                     </tr>
                                     {/loop}
