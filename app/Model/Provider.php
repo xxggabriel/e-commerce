@@ -13,12 +13,12 @@ class Provider extends Controller
             $cnpj;
 
 
-    public function create($name, $email, $phone = null, $cnpj =null)
+    public function create($data = array())
     {
-        $this->setName($name);
-        $this->setEmail($email);
-        $this->setPhone($phone);
-        $this->setCnpj($cnpj);
+        $this->setName(!empty($data['name'])?$data['name']:null);
+        $this->setEmail(!empty($data['email'])?$data['email']:null);
+        $this->setPhone(!empty($data['phone'])?$data['phone']:null);
+        $this->setCnpj(!empty($data['cnpj'])?$data['cnpj']:null);
 
         $sql = new Sql();
 

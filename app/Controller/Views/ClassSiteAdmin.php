@@ -126,7 +126,11 @@ class ClassSiteAdmin
     public function createProvider($request, $response, $args)
     {
         if($request->isPost()){
-            
+            $data = $request->getParsedBody();
+            $provider = new Provider();
+            $provider->create($data);
+            header("Location: /app/admin/provider");
+            exit;
         }
         $page = new PageAdmin();
         $page->setTpl('create-provider');
@@ -194,13 +198,15 @@ class ClassSiteAdmin
 
     public function updateProvider($request, $response, $args)
     {
-        
+        $provider = new Provider();
         if($request->isPost()){
-            
+            $provider->update((int)$args['id'],$request->getParsedBody());
+            header('Location: /app/admin/provider');
+            exit;
         }
         $page = new PageAdmin();
         $page->setTpl('update-provider',[
-
+            "provider" => $provider->read((int)$args['id'])[0]
         ]);
     }
     // END Update

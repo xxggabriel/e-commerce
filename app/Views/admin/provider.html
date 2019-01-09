@@ -11,7 +11,8 @@
                         <p class="card-description">
                             lista de fornecedores
                         </p>
-                        <p><button type="button" class="btn btn-success btn-sm"><a href="/app/admin/provider/create">Cadastrar fornecedor</a></button></p>
+                        <p>
+                            <a href="/app/admin/provider/create"><button type="button" class="btn btn-success btn-sm">Cadastrar fornecedor</button></a></p>
                         <div class="table-responsive">
                             <table class="table">
                                 <thead>
@@ -20,6 +21,7 @@
                                         <td>Nome</td>
                                         <td>Email</td>
                                         <td>Telefone</td>
+                                        <td>CNPJ</td>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -29,8 +31,10 @@
                                         <td class="limit-text-table">{$value.name}</td>
                                         <td class="limit-text-table">{$value.email}</td>
                                         <td>{$value.phone}</td>
-                                        <td><button type="button" class="btn btn-primary btn-rounded btn-sm"><a href="/app/admin/provider/{$value.id_provider}">Editar</a></button>
-                                            <button type="button" class="btn btn-danger btn-rounded btn-sm"><a href="/app/admin/provider/{$value.id_provider}/delete">Excluir</a></button>
+                                        <td>{$value.cnpj}</td>
+                                        <td>
+                                            <a href="/app/admin/provider/{$value.id_provider}"><button type="button" class="btn btn-primary btn-rounded btn-sm">Editar</button></a>
+                                            <a href="/app/admin/provider/{$value.id_provider}/delete"><button type="button" class="btn btn-danger btn-rounded btn-sm">Excluir</button></a>
                                         </td>
                                     </tr>
                                     {/loop}
