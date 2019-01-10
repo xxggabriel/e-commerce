@@ -150,6 +150,7 @@ class User extends Controller
     {
         
         $this->read($data['id_user']);
+        $_SESSION['logged'] = true;
         foreach($this->read($data['id_user'])[0] as $key => $value){
             $_SESSION[$key] = $value;
         }
