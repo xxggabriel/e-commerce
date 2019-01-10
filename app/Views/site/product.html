@@ -16,15 +16,15 @@
         <div class="zigzag-bottom"></div>
         <div class="container">
             <div class="row">
-                {*loop="$product"*}
+                {loop="$product"}
                 <div class="col-md-3 col-sm-6">
                     <div class="single-shop-product">
                         <div class="product-upper">
-                            <img src="/img/product-2.jpg" alt="">
+                            <img src="/img/product-2.jpg{*$photos.0*}" alt="">
                         </div>
-                        <h2><a href="/product/{*$value.id_product*}">{*$value.title*}</a></h2>
+                        <h2><a href="/product/{$value.id_product}">{$value.title}</a></h2>
                         <div class="product-carousel-price">
-                            <ins>{*$value.sale_value*}</ins> <del>{*$value.sale_value*}</del>
+                            <ins>{$value.sale_value}</ins> <del>{$value.sale_value}</del>
                         </div>  
                         
                         <div class="product-option-shop">
@@ -32,7 +32,7 @@
                         </div>                       
                     </div>
                 </div>
-                {*/loop*}
+                {/loop}
             
             <div class="row">
                 <div class="col-md-12">

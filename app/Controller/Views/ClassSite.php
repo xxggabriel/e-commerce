@@ -3,6 +3,7 @@
 namespace App\Controller\Views;
 
 use App\Controller\Page;
+use App\Model\Product;
 
 class ClassSite
 {
@@ -38,8 +39,12 @@ class ClassSite
 
     public function product($request, $response, $args)
     {
+        
+        $product = new Product();
         $page = new Page();
-        return $page->setTpl('product');
+        return $page->setTpl('product',[
+            "product" => $product->read(),
+        ]);
     }
 
     public function singleProduct($request, $response, $args)
