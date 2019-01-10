@@ -7,6 +7,7 @@ use App\Controller\Controller;
 
 class User extends Controller
 {
+    const COOKIE = 'CKE';
     private $id_user,
             $name,
             $email,
@@ -25,14 +26,23 @@ class User extends Controller
         $this->setStatus(!empty($data['status'])? $data['status'] : null);
 
         $sql = new Sql();
-        
-        $sql->query("CALL create_user(:name, :email, :password, :photo, :status)", [
-            ":name" => $this->getName(),
-            ":email" => $this->getEmail(),
-            ":password" => $this->getPassword(),
-            ":photo" => $this->getPhoto(),
-            ":status" => $this->getStatus()
+
+        $result = $sql->select("SELECT email FROM tb_user WHERE email = :email",[
+            ":email" => $this->getEmail()
         ]);
+        if(empty($result)){
+            var_dump($result);exit;
+            return false;
+            exit;
+        }else {
+            $sql->query("CALL create_user(:name, :email, :password, :photo, :status)", [
+                ":name" => $this->getName(),
+                ":email" => $this->getEmail(),
+                ":password" => $this->getPassword(),
+                ":photo" => $this->getPhoto(),
+                ":status" => $this->getStatus()
+            ]);
+        }
     }
 
     public function read($id_user = null)
@@ -66,6 +76,77 @@ class User extends Controller
         }
     }
 
+    public function login($data = array(), $route = '/app/admin')
+    {
+        $email = $data['email'];
+        $password = $data['password'];
+
+        $sql = new Sql(); 
+        $user = $sql->select("SELECT * FROM tb_user WHERE email = :email",[
+            ":email" => $email
+            ])[0];
+        
+        $hash = $user['password'];
+        if(password_verify($password, $hash)){
+            $this->createCookie([
+                "id_user" => $user['id_user']
+            ]);            
+            header('Location: '.$route);
+            exit;
+        } else{
+            return false;
+        }
+    }
+
+    public function logout()
+    {
+        $sql = new Sql();
+        setcookie(User::COOKIE, '', -3600);
+        $sql->query('CALL delete_cookie(:hash)',[
+            ':hash' => $_COOKIE[User::COOKIE]
+        ]);
+        
+    }
+
+    public function verifyLogin($route = '/app/login', $verify = true)
+    {
+
+        if($verify === true){
+            if(!empty($_COOKIE[User::COOKIE])){
+                $sql = new Sql;
+                $result = $sql->select("SELECT * FROM tb_cookie WHERE hash = :hash",[
+                    ":hash" => $_COOKIE[User::COOKIE]
+                ]);
+
+                if(empty($result)){
+                    header('Location: '.$route);
+                    exit;
+                }
+            }
+            else {
+               header('Location: '.$route);
+               exit;
+           }
+        }else {
+            return true;
+        }
+    }
+
+    public function createCookie($data = array())
+    {
+        $id_user = $data['id_user'];
+        $hash = md5(time());
+
+        $sql = new Sql();
+
+        $sql->query("CALL create_cookie(:cookie,:id_user, :hash)",[
+            ":cookie" => User::COOKIE,
+            ":id_user" => $id_user,
+            ":hash" => $hash
+        ]);
+
+        setcookie(User::COOKIE,$hash,time()+ 10 * 24 * 3600);// 10 Day
+    }
 
     public function delete($id_user)
     {

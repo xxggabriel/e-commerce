@@ -1,7 +1,15 @@
 <?php 
 
+$app->get('/app/login', \App\Controller\Views\ClassSiteAdmin::class.':login');
+$app->post('/app/login', \App\Controller\Views\ClassSiteAdmin::class.':login');
+
+$app->get('/app/logout', \App\Controller\Views\ClassSiteAdmin::class.':logout');
+
+$app->get('/app/register', \App\Controller\Views\ClassSiteAdmin::class.':register');
+$app->post('/app/register', \App\Controller\Views\ClassSiteAdmin::class.':register');
 
 $app->group('/app/admin',function (\Slim\App $app){
+    
     $app->get('', \App\Controller\Views\ClassSiteAdmin::class.':index')->setName('index-admin');
     $app->group('/user',function (\Slim\App $app){
 

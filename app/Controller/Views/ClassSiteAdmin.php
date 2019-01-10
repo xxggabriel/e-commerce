@@ -12,14 +12,81 @@ use App\Model\Provider;
 class ClassSiteAdmin 
 {
 
+    public function login($request, $response, $args)
+    {  
+        $user = new User();
+        $user->verifyLogin('/app/admin',false);
+        $page = new PageAdmin([
+            "header" => false,
+            "footer" => false
+        ]);
+        if($request->isPost()){
+            // var_dump($request->getParsedBody());exit;
+            $data = $request->getParsedBody();
+            $user = new User();
+            $result = $user->login($data);
+            if($result == false){
+                $page->setDataAssign([
+                    "error" => [
+                        "message" => "Login ou senha invalido."
+                        ]
+                ]);
+            }
+        }
+        
+        $page->setTpl('login');
+    }
+
+    public function register($request, $response, $args)
+    {  
+        $user = new User();
+        $user->verifyLogin('/app/admin',false);
+        $page = new PageAdmin([
+            "header" => false,
+            "footer" => false
+        ]);
+        if($request->isPost()){
+            // var_dump($request->getParsedBody());exit;
+            $data = $request->getParsedBody();
+            $user = new User();
+            $result = $user->create($data);
+            if($result == false){
+                $page->setDataAssign([
+                    "error" => [
+                        "message" => "Email já cadastrado."
+                        ]
+                ]);
+                $page->setTpl('register');
+                exit;
+            }
+            header('Location: /app/login');
+            exit;
+        }
+        
+        $page->setTpl('register');
+
+    }
+
+    public function logout($request, $response, $args)
+    {
+        $user = new User();
+        $user->logout();
+        header('Location: /app/login');
+        exit;
+    }
+
     public function index($request, $response, $args)
     {  
+        $user = new User();
+        $user->verifyLogin();
         $page = new PageAdmin();
         $page->setTpl('index');
     }
 
     public function product($request, $response, $args)
     {  
+        $user = new User();
+        $user->verifyLogin();
         $product = new Product();
         $page = new PageAdmin();
         $page->setTpl('product',[
@@ -29,6 +96,8 @@ class ClassSiteAdmin
 
     public function brand($request, $response, $args)
     {  
+        $user = new User();
+        $user->verifyLogin();
         $brand = new Brand();
         $page = new PageAdmin();
         $page->setTpl('brand',[
@@ -37,8 +106,9 @@ class ClassSiteAdmin
     }
 
     public function user($request, $response, $args)
-    {        
+    {      
         $user = new User();
+        $user->verifyLogin(); 
         $page = new PageAdmin();
         $page->setDataAssign([
             "user" => $user->read()
@@ -49,6 +119,8 @@ class ClassSiteAdmin
 
     public function category($request, $response, $args)
     {  
+        $user = new User();
+        $user->verifyLogin();
         $category = new Category();
         $page = new PageAdmin();
         $page->setTpl('category',[
@@ -58,6 +130,8 @@ class ClassSiteAdmin
 
     public function provider($request, $response, $args)
     {  
+        $user = new User();
+        $user->verifyLogin();
         $provider = new Provider();
         $page = new PageAdmin();
         $page->setTpl('provider',[
@@ -69,6 +143,8 @@ class ClassSiteAdmin
 
     public function createProduct($request, $response, $args)
     {  
+        $user = new User();
+        $user->verifyLogin();
         if($request->isPost()){
             // var_dump($request->getParsedBody());exit;
             $data = $request->getParsedBody();
@@ -83,6 +159,8 @@ class ClassSiteAdmin
 
     public function createBrand($request, $response, $args)
     {  
+        $user = new User();
+        $user->verifyLogin();
         if($request->isPost()){
             $data = $request->getParsedBody();
             $brand = new Brand();
@@ -96,6 +174,8 @@ class ClassSiteAdmin
 
     public function createCategory($request, $response, $args)
     {  
+        $user = new User();
+        $user->verifyLogin();
         if($request->isPost()){
             $data = $request->getParsedBody();
             $category = new Category();
@@ -111,10 +191,11 @@ class ClassSiteAdmin
     public function createUser($request, $response, $args)
     {
         
+        $user = new User();
+        $user->verifyLogin();
         if($request->isPost()){
             // var_dump($request->getParsedBody());exit;
             $data = $request->getParsedBody();
-            $user = new User();
             $user->create($data);
             header("Location: /app/admin/user");
             exit;
@@ -125,6 +206,8 @@ class ClassSiteAdmin
 
     public function createProvider($request, $response, $args)
     {
+        $user = new User();
+        $user->verifyLogin();
         if($request->isPost()){
             $data = $request->getParsedBody();
             $provider = new Provider();
@@ -142,6 +225,8 @@ class ClassSiteAdmin
 
     public function updateProduct($request, $response, $args)
     {  
+        $user = new User();
+        $user->verifyLogin();
         $product = new Product();
         $brand = new Brand();
         $provider = new Provider();
@@ -168,6 +253,8 @@ class ClassSiteAdmin
 
     public function updateBrand($request, $response, $args)
     {  
+        $user = new User();
+        $user->verifyLogin();
         $brand = new Brand();
         if($request->isPost()){
             $brand->update((int)$args['id'],$request->getParsedBody());
@@ -183,6 +270,8 @@ class ClassSiteAdmin
 
     public function updateCategory($request, $response, $args)
     {  
+        $user = new User();
+        $user->verifyLogin();
         $category = new Category();
         if($request->isPost()){
             $category->update((int)$args['id'],$request->getParsedBody());
@@ -199,6 +288,7 @@ class ClassSiteAdmin
     public function updateUser($request, $response, $args)
     {
         $user = new User();
+        $user->verifyLogin();
         if($request->isPost()){
             $user->update((int)$args['id'],$request->getParsedBody());
             header('Location: /app/admin/user');
@@ -214,6 +304,7 @@ class ClassSiteAdmin
     public function updateUserPassword($request, $response, $args)
     {
         $user = new User();
+        $user->verifyLogin();
         if($request->isPost()){
             $user->update((int)$args['id'],$request->getParsedBody());
             header('Location: /app/admin/user');
@@ -227,6 +318,8 @@ class ClassSiteAdmin
 
     public function updateProvider($request, $response, $args)
     {
+        $user = new User();
+        $user->verifyLogin();
         $provider = new Provider();
         if($request->isPost()){
             $provider->update((int)$args['id'],$request->getParsedBody());
@@ -244,6 +337,8 @@ class ClassSiteAdmin
 
     public function deleteProduct($request, $response, $args)
     {  
+        $user = new User();
+        $user->verifyLogin();
         $product = new Product();
         $product->delete((int)$args['id']);
         header('Location: /app/admin/product');
@@ -252,6 +347,8 @@ class ClassSiteAdmin
 
     public function deleteBrand($request, $response, $args)
     {  
+        $user = new User();
+        $user->verifyLogin();
         $brand = new Brand();
         $brand->delete((int)$args['id']);
         header('Location: /app/admin/brand');
@@ -260,6 +357,8 @@ class ClassSiteAdmin
 
     public function deleteCategory($request, $response, $args)
     {  
+        $user = new User();
+        $user->verifyLogin();
         $category = new Category();
         $category->delete((int)$args['id']);
         header('Location: /app/admin/category');
@@ -268,7 +367,8 @@ class ClassSiteAdmin
 
     public function deleteUser($request, $response, $args)
     {
-        $user= new User();
+        $user = new User();
+        $user->verifyLogin();
         $user->delete((int)$args['id']);
         header('Location: /app/admin/user');
         exit;
@@ -276,10 +376,31 @@ class ClassSiteAdmin
 
     public function deleteProvider($request, $response, $args)
     {
+        $user = new User();
+        $user->verifyLogin();
         $provider = new Provider();
         $provider->delete((int)$args['id']);
         header('Location: /app/admin/provider');
         exit;
     }
     // END Delete
+
+    /**
+     * Get the value of verify
+     */ 
+    public function getVerify()
+    {
+        return $this->verify;
+    }
+
+    /**
+     * Set the value of verify
+     *
+     * @return  self
+     */ 
+    public function setVerify($verify)
+    {
+        $this->verify = $verify;
+
+    }
 }
