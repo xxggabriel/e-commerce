@@ -1,5 +1,5 @@
 <?php 
-
+session_start();
 use Slim\App;
 use App\Controller\Page;
 

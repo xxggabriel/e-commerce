@@ -16,7 +16,18 @@ class User extends Controller
             $status = 2;
     
     
-
+    public function startUser()
+    {
+        if(!empty($_COOKIE[User::COOKIE])){
+            $sql = new Sql();
+            return $sql->select("SELECT * FROM tb_user u 
+                                    INNER JOIN tb_cookie c
+                                    WHERE c.hash = :hash AND c.id_user = u.id_user",[
+                ":hash" => $_COOKIE[User::COOKIE]
+            ]);
+        }
+        
+    }
     public function create($data = array())
     {
         $this->setName(!empty($data['name'])? $data['name'] : null);
@@ -90,7 +101,10 @@ class User extends Controller
         if(password_verify($password, $hash)){
             $this->createCookie([
                 "id_user" => $user['id_user']
-            ]);            
+            ]);           
+            $this->createSession([
+                "id_user" => $user['id_user']
+            ]); 
             header('Location: '.$route);
             exit;
         } else{
@@ -130,6 +144,16 @@ class User extends Controller
         }else {
             return true;
         }
+    }
+
+    public function createSession($data = array())
+    {
+        
+        $this->read($data['id_user']);
+        foreach($this->read($data['id_user'])[0] as $key => $value){
+            $_SESSION[$key] = $value;
+        }
+
     }
 
     public function createCookie($data = array())

@@ -1,5 +1,4 @@
 <?php 
-
 $app->get('/app/login', \App\Controller\Views\ClassSiteAdmin::class.':login');
 $app->post('/app/login', \App\Controller\Views\ClassSiteAdmin::class.':login');
 
