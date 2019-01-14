@@ -4,9 +4,16 @@ namespace App\Controller\Views;
 
 use App\Controller\Page;
 use App\Model\Product;
+use App\Model\Category;
 
 class ClassSite
 {
+
+    public function notFound($request, $response, $args)
+    {
+        $page = new Page();
+        return $page->setTpl('error/404');
+    }
     public function index($request, $response, $args)
     {
         $page = new Page();
@@ -50,6 +57,12 @@ class ClassSite
     public function singleProduct($request, $response, $args)
     {
         $page = new Page();
-        return $page->setTpl('single-product');
+        $product = new Product();
+        $category = new Category();
+        // var_dump($category->read($product->read((int)$args['id'])[0]['id_category']));exit;
+        return $page->setTpl('single-product',[
+            "product" => $product->read((int)$args['id'])[0],
+            "category" => $category->read($product->read((int)$args['id'])[0]['id_category'])[0]
+        ]);
     }
 }

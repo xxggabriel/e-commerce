@@ -66,30 +66,31 @@
             <div class="form-group">
                 <label for="">Fornecador:</label>
                 <select name="id_provider" class="form-control form-control-lg">
-                    <option value="null">Sem fornecedor</option>
-                    {*loop="provider"*}
-                    <option value="{*$value.id_provider*}" >{*$value.name*}</option>
-                    {*/loop*}
+                    <option value="">Sem categoria</option>
+                    {loop="$list_provider"}
+                    <option value='{$value.id_provider}'>{$value.name}</option>
+                    {/loop}
                 </select>
             </div>
 
             <div class="form-group">
                 <label for="">Marca:</label>
                 <select name="id_brand" class="form-control form-control-lg">
-                    <option value="null">Sem marca</option>
-                    {*loop="brand"*}
-                    <option value="{*$value.id_brand*}" >{*$value.name*}</option>
-                    {*/loop*}
+                    <option value="">Sem categoria</option>
+                    {loop="$list_brand"}
+                    <option value='{$value.id_brand}'>{$value.name}</option>
+                    {/loop}
                 </select>
             </div>
 
             <div class="form-group">
                 <label for="">Categoria:</label>
                 <select name="id_category" class="form-control form-control-lg">
-                    <option value="null">Sem vategoria</option>
-                    {*loop="category"*}
-                    <option value="{*$value.id_category*}" >{*$value.name*}</option>
-                    {*/loop*}
+                    <option value="">Sem categoria</option>
+                    {loop="$list_category"}
+                    <option value='{$value.id_category}'>{$value.name}</option>
+                    {/loop}
+                    
                 </select>
             </div>
             <div class="form-group">

@@ -11,6 +11,34 @@ use App\Model\Provider;
 
 class ClassSiteAdmin 
 {
+    private function requiredForProducts($id = null)
+    {
+        $brand = new Brand();
+        $provider = new Provider();
+        $category = new Category();
+        $product = new Product();
+
+        if(!empty($id)){
+            return [
+                "product" => $product->read($id)[0],
+                "brand" => $brand->read($product->read($id)[0]['id_brand'])[0],
+                "provider" => $provider->read($product->read($id)[0]['id_provider'])[0],
+                "category" => $category->read($product->read($id)[0]['id_category'])[0],
+                "list_category" => $category->read(), 
+                "list_brand" => $brand->read(), 
+                "list_provider" => $provider->read(), 
+            ];
+        } else {
+            return [
+                "brand" => $brand->read(),
+                "provider" => $provider->read(),
+                "category" => $category->read(),
+                "list_category" => $category->read(), 
+                "list_brand" => $brand->read(), 
+                "list_provider" => $provider->read(), 
+            ];
+        }
+    }
 
     public function login($request, $response, $args)
     {  
@@ -146,15 +174,19 @@ class ClassSiteAdmin
         $user = new User();
         $user->verifyLogin();
         if($request->isPost()){
-            // var_dump($request->getParsedBody());exit;
+
             $data = $request->getParsedBody();
+
             $product = new Product();
             $product->create($data);
             header("Location: /app/admin/product");
             exit;
         }
+
         $page = new PageAdmin();
-        $page->setTpl('create-product');
+        $page->setTpl('create-product',
+            $this->requiredForProducts()
+        );
     }
 
     public function createBrand($request, $response, $args)
@@ -227,28 +259,18 @@ class ClassSiteAdmin
     {  
         $user = new User();
         $user->verifyLogin();
-        $product = new Product();
-        $brand = new Brand();
-        $provider = new Provider();
-        $category = new Category();
 
         if($request->isPost()){
+            $product = new Product();
             $product->update((int)$args['id'],$request->getParsedBody());
             header('Location: /app/admin/product');
             exit;
         }
         $page = new PageAdmin();
-        // var_dump($category->read($product->read((int)$args['id'])[0]['id_category'])[0]);exit;
-        $page->setTpl('update-product',[    
-            "product" => $product->read((int)$args['id'])[0],
-            "brand" => $brand->read($product->read((int)$args['id'])[0]['id_brand'])[0],
-            "provider" => $provider->read($product->read((int)$args['id'])[0]['id_provider'])[0],
-            "category" => $category->read($product->read((int)$args['id'])[0]['id_category'])[0],
-            "list_category" => $category->read(), 
-            "list_brand" => $brand->read(), 
-            "list_provider" => $provider->read(), 
-            
-        ]);
+        // var_dump($this->requiredForProducts((int)$args['id']));exit;
+        $page->setTpl('update-product',
+            $this->requiredForProducts((int)$args['id'])
+        );
     }
 
     public function updateBrand($request, $response, $args)
