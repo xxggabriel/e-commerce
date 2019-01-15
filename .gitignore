@@ -1,4 +1,7 @@
-app/views/cache/*
+app/Views/cache/*
 /test
 /vendor/
 config/FileConfig.php
+_config.yml
+.gitignore
+README.md
