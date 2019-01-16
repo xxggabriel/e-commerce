@@ -31,6 +31,13 @@ $app->group('/app/admin',function (\Slim\App $app){
 
         $app->get('/create', \App\Controller\Views\ClassSiteAdmin::class.':createProduct')->setName('product-create-admin');
         $app->post('/create', \App\Controller\Views\ClassSiteAdmin::class.':createProduct');
+        
+
+        $app->get('/create/photo/{id}', \App\Controller\Views\ClassSiteAdmin::class.':savePhotoProduct')->setName('product-save-photo-admin');
+        $app->post('/create/photo/{id}', \App\Controller\Views\ClassSiteAdmin::class.':savePhotoProduct');
+        
+        $app->get('/photo/{id}', \App\Controller\Views\ClassSiteAdmin::class.':updatePhotoProduct')->setName('product-update-photo-admin');
+        $app->post('/photo/{id}', \App\Controller\Views\ClassSiteAdmin::class.':updatePhotoProduct');
 
         $app->get('/{id}', \App\Controller\Views\ClassSiteAdmin::class.':updateProduct')->setName('product-update-admin');
         $app->post('/{id}', \App\Controller\Views\ClassSiteAdmin::class.':updateProduct');

@@ -33,7 +33,9 @@
                                         <td>{$value.sale_value}</td>
                                         <td>{$value.amount}</td>
                                         <td>{$value.promotion}</td>
-                                        <td><a href="/app/admin/product/{$value.id_product}"><button type="button" class="btn btn-primary btn-rounded btn-sm">Editar</button></a>
+                                        <td>
+                                            <a href="/app/admin/product/{$value.id_product}"><button type="button" class="btn btn-primary btn-rounded btn-sm">Editar</button></a>
+                                            <a href="/app/admin/product/photo/{$value.id_product}"><button type="button" class="btn btn-rounded btn-sm">Photo</button></a>
                                             <a href="/app/admin/product/{$value.id_product}/delete"><button type="button" class="btn btn-danger btn-rounded btn-sm">Excluir</button></a>
                                         </td>
                                     </tr>

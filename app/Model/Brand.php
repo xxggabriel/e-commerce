@@ -17,7 +17,7 @@ class Brand extends Controller
 
         $sql->query("CALL create_brand(:name, :logo)", [
             ":name" => $this->getName(),
-            ":logo" => $this->getLogo()
+            ":logo" => $this->getLogo()[0]
         ]);
     }
 
@@ -35,8 +35,8 @@ class Brand extends Controller
         $sql = new Sql();
 
         if(!empty($_FILES['logo']['tmp_name'])){
-            $this->setLogo($_FILES['logo']);
-            $value = $this->getLogo();
+            $this->setLogo(!empty($_FILES['logo'])?$_FILES['logo']:NULL);
+            $value = $this->getLogo()[0];
             $sql->query("UPDATE tb_brand 
                     SET logo = :value
                     WHERE id_brand = :id_brand",[

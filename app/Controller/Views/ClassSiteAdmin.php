@@ -11,6 +11,8 @@ use App\Model\Provider;
 
 class ClassSiteAdmin 
 {
+
+    // Auxilia a criação de variaveis nas views
     private function requiredForProducts($id = null)
     {
         $brand = new Brand();
@@ -38,6 +40,50 @@ class ClassSiteAdmin
                 "list_provider" => $provider->read(), 
             ];
         }
+    }
+
+    public function savePhotoProduct($request, $response, $args)
+    {
+        $user = new User();
+        $user->verifyLogin();
+        if($request->isPost()){
+
+            $data = $request->getParsedBody();
+
+            $product = new Product();
+            $product->savePhotoProduct((int)$args['id']);
+            header("Location: /app/admin/product");
+            exit;
+        }
+
+        $page = new PageAdmin();
+        $page->setTpl('save-photo-product',[
+            "product" => [
+                "id" => (int)$args['id']
+                ]
+        ]);
+    }
+
+    public function updatePhotoProduct($request, $response, $args)
+    {
+        $user = new User();
+        $user->verifyLogin();
+        if($request->isPost()){
+
+            $data = $request->getParsedBody();
+
+            $product = new Product();
+            $product->savePhotoProduct((int)$args['id']);
+            header("Location: /app/admin/product");
+            exit;
+        }
+
+        $page = new PageAdmin();
+        $page->setTpl('update-photo-product',[
+            "product" => [
+                "id" => (int)$args['id']
+                ]
+        ]);
     }
 
     public function login($request, $response, $args)
@@ -180,7 +226,7 @@ class ClassSiteAdmin
 
             $product = new Product();
             $product->create($data);
-            header("Location: /app/admin/product");
+            header("Location: /app/admin/product/create/photo/".(int)$args['id']);
             exit;
         }
 
