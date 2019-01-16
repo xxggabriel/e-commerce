@@ -72,7 +72,7 @@ class User extends Controller
         $this->setId_user($id_user);
         if(!empty($_FILES['photo'])){
             $this->setPhoto(!empty($_FILES['photo'])? $_FILES['photo']: null);
-            
+
             $sql->query("UPDATE tb_user 
                 SET photo = :photo
                 WHERE id_user = :id_user",[
@@ -95,28 +95,48 @@ class User extends Controller
         }
     }
 
-    public function login($data = array(), $route = '/app/admin')
+    public function login($data = array(), $accessLevel = 2)
     {
         $email = $data['email'];
         $password = $data['password'];
 
         $sql = new Sql(); 
-        $user = $sql->select("SELECT * FROM tb_user WHERE email = :email",[
+        $user = @$sql->select("SELECT * FROM tb_user WHERE email = :email",[
             ":email" => $email
             ])[0];
+        if(!empty($user))
+        {
+            if($user['status'] == $accessLevel)
+            {
+                $hash = $user['password'];
+                if(password_verify($password, $hash))
+                {
+                    $this->createCookie([
+                        "id_user" => $user['id_user']
+                    ]);           
+                    $this->createSession([
+                        "id_user" => $user['id_user']
+                    ]); 
+                    header('Location: /app/admin'); 
+                    exit;
+                } else
+                {
+                    return [
+                        'msg' => 'Acesso negado.',
         
-        $hash = $user['password'];
-        if(password_verify($password, $hash)){
-            $this->createCookie([
-                "id_user" => $user['id_user']
-            ]);           
-            $this->createSession([
-                "id_user" => $user['id_user']
-            ]); 
-            header('Location: '.$route);
-            exit;
-        } else{
-            return false;
+                    ];
+                } 
+            } else {
+                return [
+                    'msg' => 'Sem permissão para essa parte do site.',
+    
+                ];
+            }
+        } else {
+            return [
+                'msg' => 'login ou senha inexistente.',
+
+            ];
         }
     }
 
@@ -130,27 +150,32 @@ class User extends Controller
         
     }
 
-    public function verifyLogin($route = '/app/login', $verify = true)
+    public function verifyLogin($verify = true)
     {
-
-        if($verify === true){
-            if(!empty($_COOKIE[User::COOKIE])){
+        if($verify === true)
+        {
+            if(!empty($_COOKIE[User::COOKIE]))
+            {
                 $sql = new Sql;
+                // Verificar se o usuário tem um hash no cookie
                 $result = $sql->select("SELECT * FROM tb_cookie WHERE hash = :hash",[
                     ":hash" => $_COOKIE[User::COOKIE]
-                ]);
+                ])[0];
 
-                if(empty($result)){
-                    header('Location: '.$route);
-                    exit;
-                }
+                if(empty($result))
+                {
+                    $this->logout();
+                } 
             }
-            else {
-               header('Location: '.$route);
-               exit;
+            else 
+            {
+                // Caso não estiver na rota /app/login vai redirecinar para /app/login
+                if($_SERVER['REQUEST_URI'] != '/app/login')
+                {
+                    header('Location: /app/login');
+                    exit;             
+                }
            }
-        }else {
-            return true;
         }
     }
 

@@ -48,16 +48,17 @@ class ClassSiteAdmin
             "header" => false,
             "footer" => false
         ]);
+        
         if($request->isPost()){
-            // var_dump($request->getParsedBody());exit;
             $data = $request->getParsedBody();
             $user = new User();
-            $result = $user->login($data);
-            if($result == false){
+            $result = $user->login($data, 3);
+
+            if(!empty($result)){
                 $page->setDataAssign([
                     "error" => [
-                        "message" => "Login ou senha invalido."
-                        ]
+                        "message" => $result['msg']
+                    ]
                 ]);
             }
         }
