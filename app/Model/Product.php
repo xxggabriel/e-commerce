@@ -17,7 +17,8 @@ class Product extends Controller
             $sale_value  = 0,
             $id_brand    = null,
             $id_provider = null,
-            $id_category = null;
+            $id_category = null,
+            $photo;
 
 
     public function create($data)
@@ -82,7 +83,35 @@ class Product extends Controller
             ":id_product" => $id_product
         ]);
     }
-    
+    public function updatePhotoProduct()
+    {
+        $this->setPhoto(!empty($_FILES['photo'])?$_FILES['photo']:null);
+        $result = $this->getPhoto();
+        $sql = new Sql();
+        for($i = 0; $i < count($result); $i ++)
+        {
+            $sql->query("UPDATE tb_photo_product SET id_product = :id_product, directory = :directory, :ranking = :ranking",[
+                ":directory" => $result[$i],
+                ":id_product" => $id_product,
+                ":ranking" => $i
+            ]);
+        }
+    }
+    public function savePhotoProduct($id_product)
+    {
+        
+        $this->setPhoto(!empty($_FILES['photo'])?$_FILES['photo']:null);
+        $result = $this->getPhoto();
+        $sql = new Sql();
+        for($i = 0; $i < count($result); $i ++)
+        {
+            $sql->query("CALL save_photo_product(:id_product, :directory, :ranking)",[
+                ":directory" => $result[$i],
+                ":id_product" => $id_product,
+                ":ranking" => $i
+            ]);
+        }
+    }
 
     /**
      * Get the value of id_category
@@ -272,5 +301,25 @@ class Product extends Controller
     {
         $this->sale_value = (double)$sale_value;
 
+    }
+
+    /**
+     * Get the value of photo
+     */ 
+    public function getPhoto()
+    {
+        return $this->photo;
+    }
+
+    /**
+     * Set the value of photo
+     *
+     * @return  self
+     */ 
+    public function setPhoto($photo)
+    {
+        $this->photo = $this->savePhoto($photo, 'product');
+
+        return $this;
     }
 }

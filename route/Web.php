@@ -13,9 +13,9 @@ $app->get('/product', \App\Controller\Views\ClassSite::class . ':product')->setN
 
 $app->get('/cart', \App\Controller\Views\ClassSite::class . ':cart')->setName('cart');
 
-$app->get('/product/details/{id}', \App\Controller\Views\ClassSite::class . ':singleProduct')->setName('pagination-product');
+$app->get('/product/details/{id}', \App\Controller\Views\ClassSite::class . ':detailsProduct')->setName('pagination-product');
 
-$app->post('/product/details/{id}', \App\Controller\Views\ClassSite::class . ':singleProduct')->setName('single-product');
+$app->post('/product/details/{id}', \App\Controller\Views\ClassSite::class . ':detailsProduct')->setName('single-product');
 
 $app->get('/checkout', \App\Controller\Views\ClassSite::class . ':checkout')->setName('checkout');
 

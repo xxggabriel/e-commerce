@@ -54,13 +54,13 @@ class ClassSite
         ]);
     }
 
-    public function singleProduct($request, $response, $args)
+    public function detailsProduct($request, $response, $args)
     {
         $page = new Page();
         $product = new Product();
         $category = new Category();
         // var_dump($category->read($product->read((int)$args['id'])[0]['id_category']));exit;
-        return $page->setTpl('single-product',[
+        return $page->setTpl('details-product',[
             "product" => $product->read((int)$args['id'])[0],
             "category" => $category->read($product->read((int)$args['id'])[0]['id_category'])[0]
         ]);
