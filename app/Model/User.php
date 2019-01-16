@@ -35,22 +35,22 @@ class User extends Controller
         $this->setPassword(!empty($data['password'])? $data['password'] : null);
         $this->setPhoto(!empty($_FILES['photo'])? $_FILES['photo']: null);
         $this->setStatus(!empty($data['status'])? $data['status'] : null);
-
         $sql = new Sql();
 
         $result = $sql->select("SELECT email FROM tb_user WHERE email = :email",[
             ":email" => $this->getEmail()
         ]);
-        if(empty($result)){
-            var_dump($result);exit;
+        if(!empty($result) && isset($result)){
+            
             return false;
             exit;
         }else {
+            
             $sql->query("CALL create_user(:name, :email, :password, :photo, :status)", [
                 ":name" => $this->getName(),
                 ":email" => $this->getEmail(),
                 ":password" => $this->getPassword(),
-                ":photo" => $this->getPhoto(),
+                ":photo" => $this->getPhoto()[0],
                 ":status" => $this->getStatus()
             ]);
         }
@@ -70,12 +70,20 @@ class User extends Controller
         $sql = new Sql();
 
         $this->setId_user($id_user);
-
+        if(!empty($_FILES['photo'])){
+            $this->setPhoto(!empty($_FILES['photo'])? $_FILES['photo']: null);
+            
+            $sql->query("UPDATE tb_user 
+                SET photo = :photo
+                WHERE id_user = :id_user",[
+                ":photo" => $this->getPhoto(),
+                ":id_user" => $this->getId_user()
+            ]);
+        } 
         foreach($data as $key => $value){
             if($key === "password"){
                 $value = password_hash($value, PASSWORD_DEFAULT);
-            }          
-            
+            }    
             $sql->query("UPDATE tb_user 
                         SET $key = :value
                         WHERE id_user = :id_user",[
@@ -262,7 +270,7 @@ class User extends Controller
      */ 
     public function getPhoto()
     {
-        return $this->photo;
+        return $this->photo[0];
     }
 
     /**
@@ -270,10 +278,10 @@ class User extends Controller
      *
      * 
      */ 
-    public function setPhoto($photo = null)
+    public function setPhoto($photo)
     {
-        ;
-        $this->photo = $this->savePhoto($photo,'user');
+
+        $this->photo = $this->savePhoto($photo, 'user');
 
     }
 
