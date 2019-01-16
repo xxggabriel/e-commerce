@@ -60,6 +60,7 @@ class User extends Controller
     {
         $this->setId_user($id_user);
         $sql = new Sql();
+        
         return $sql->select("CALL read_user(:id_user)",[
             ":id_user" => $this->getId_user()
         ]);   
@@ -70,6 +71,7 @@ class User extends Controller
         $sql = new Sql();
 
         $this->setId_user($id_user);
+        // Verificar se existe imagem no $_FILES
         if(!empty($_FILES['photo'])){
             $this->setPhoto(!empty($_FILES['photo'])? $_FILES['photo']: null);
 
@@ -80,7 +82,9 @@ class User extends Controller
                 ":id_user" => $this->getId_user()
             ]);
         } 
+        // Para cada campo faça um update
         foreach($data as $key => $value){
+            // Caso seja a senha, faça uma criptografia
             if($key === "password"){
                 $value = password_hash($value, PASSWORD_DEFAULT);
             }    
@@ -109,11 +113,14 @@ class User extends Controller
             if($user['status'] == $accessLevel)
             {
                 $hash = $user['password'];
+                // Validar senha
                 if(password_verify($password, $hash))
                 {
+                    // Criando cookie
                     $this->createCookie([
                         "id_user" => $user['id_user']
-                    ]);           
+                    ]);     
+                    // Iniciando Sessão   
                     $this->createSession([
                         "id_user" => $user['id_user']
                     ]); 
@@ -121,18 +128,21 @@ class User extends Controller
                     exit;
                 } else
                 {
+                    // Senha errada
                     return [
-                        'msg' => 'Acesso negado.',
+                        'msg' => 'login ou senha inexistente.',
         
                     ];
                 } 
             } else {
+                // Sem permição 
                 return [
                     'msg' => 'Sem permissão para essa parte do site.',
     
                 ];
             }
         } else {
+            // Caso não encontre o email
             return [
                 'msg' => 'login ou senha inexistente.',
 
