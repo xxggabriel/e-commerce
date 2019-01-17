@@ -225,8 +225,9 @@ class ClassSiteAdmin
             $data = $request->getParsedBody();
 
             $product = new Product();
-            $product->create($data);
-            header("Location: /app/admin/product/create/photo/".(int)$args['id']);
+            $id = $product->create($data);
+            
+            header("Location: /app/admin/product/create/photo/".$id['LAST_INSERT_ID()']);
             exit;
         }
 

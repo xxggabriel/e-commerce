@@ -38,7 +38,7 @@ class Product extends Controller
 
 
 
-        $sql->query("CALL create_product(:name, :title, :description, :promotion, :amount, :cost_value, :sale_value, :id_brand, :id_provider, :id_category)",[
+        return $sql->select("CALL create_product(:name, :title, :description, :promotion, :amount, :cost_value, :sale_value, :id_brand, :id_provider, :id_category)",[
             ":name" => $this->getName(),
             ":title" => $this->getTitle(),
             ":description" => $this->getDescription(),
@@ -49,7 +49,7 @@ class Product extends Controller
             ":id_brand" => $this->getId_brand(),
             ":id_provider" => $this->getId_provider(),
             ":id_category" => $this->getId_category()
-        ]);
+        ])[0];
     }
 
     public function read($id_product = null)
@@ -81,6 +81,14 @@ class Product extends Controller
 
         $sql->query("CALL delete_product(:id_product)",[
             ":id_product" => $id_product
+        ]);
+    }
+
+    public function readPhoto($id_product)
+    {
+        $sql = new Sql();
+        return $sql->select('CALL read_photo_product(:id_product)',[
+            ':id_product' => $id_product
         ]);
     }
     public function updatePhotoProduct()

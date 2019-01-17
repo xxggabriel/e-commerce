@@ -59,10 +59,11 @@ class ClassSite
         $page = new Page();
         $product = new Product();
         $category = new Category();
-        // var_dump($category->read($product->read((int)$args['id'])[0]['id_category']));exit;
+        
         return $page->setTpl('details-product',[
             "product" => $product->read((int)$args['id'])[0],
-            "category" => $category->read($product->read((int)$args['id'])[0]['id_category'])[0]
+            "category" => $category->read($product->read((int)$args['id'])[0]['id_category'])[0],
+            "photo" => $product->readPhoto((int)$args['id'])
         ]);
     }
 }
