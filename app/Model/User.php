@@ -38,11 +38,14 @@ class User extends Controller
         $result = $sql->select("SELECT email FROM tb_user WHERE email = :email",[
             ":email" => $this->getEmail()
         ]);
-        if(!empty($result) && isset($result)){
+
+        if(!empty($result) && isset($result))
+        {
             
             return false;
             exit;
-        }else {
+        }else 
+        {
             
             $sql->query("CALL create_user(:name, :email, :password, :photo, :status)", [
                 ":name" => $this->getName(),
@@ -260,7 +263,21 @@ class User extends Controller
      */ 
     public function setName($name)
     {
-        $this->name = !empty($name)? $name : null;
+        if(!empty($name))
+        {
+            if(strlen($name) <= 60)
+            {
+                $this->name = $name;
+
+            } else 
+            {
+                throw new \Exception('Nome muito grande, por favor digite um nome menor que 60 letras!');
+            }
+        } else 
+        {
+            throw new \Exception('Nome não informado!');
+        }
+
 
     }
 
@@ -279,7 +296,20 @@ class User extends Controller
      */ 
     public function setEmail($email)
     {
-        $this->email = !empty($email)? $email : null;
+        if(!empty($email))
+        {
+            if(strlen($email) <= 100)
+            {
+                $this->email = $email;
+                     
+            } else 
+            {
+                throw new \Exception('Email muito grande, por favor digite um email menor que 100 caracteres!');
+            }
+        } else 
+        {
+            throw new \Exception('Email não informado!');
+        }
 
     }
 
@@ -298,9 +328,14 @@ class User extends Controller
      */ 
     public function setPassword($password)
     {
-        $password = !empty($password)? $password : null;
-
-        $this->password = password_hash($password, PASSWORD_DEFAULT);
+        if(!empty($password))
+        {
+            $this->password = password_hash($password, PASSWORD_DEFAULT);               
+            
+        } else 
+        {
+            throw new \Exception('Senha não informado!');
+        }
 
     }
 
