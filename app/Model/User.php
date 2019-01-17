@@ -30,9 +30,9 @@ class User extends Controller
     }
     public function create($data = array())
     {
-        $this->setName(!empty($data['name'])? $data['name'] : null);
-        $this->setEmail(!empty($data['email'])? $data['email'] : null);
-        $this->setPassword(!empty($data['password'])? $data['password'] : null);
+        $this->setName();
+        $this->setEmail();
+        $this->setPassword();
         $this->setPhoto(!empty($_FILES['photo'])? $_FILES['photo']: null);
         $this->setStatus(!empty($data['status'])? $data['status'] : null);
         $sql = new Sql();
@@ -152,6 +152,7 @@ class User extends Controller
 
     public function logout()
     {
+        session_destroy();
         $sql = new Sql();
         setcookie(User::COOKIE, '', -3600);
         $sql->query('CALL delete_cookie(:hash)',[
@@ -171,6 +172,8 @@ class User extends Controller
                 $result = $sql->select("SELECT * FROM tb_cookie WHERE hash = :hash",[
                     ":hash" => $_COOKIE[User::COOKIE]
                 ])[0];
+                
+                $this->createSession($result['id_user']);
 
                 if(empty($result))
                 {
@@ -189,15 +192,35 @@ class User extends Controller
         }
     }
 
-    public function createSession($data = array())
+    public function createSession($id_user)
     {
-        
-        $this->read($data['id_user']);
-        $_SESSION['logged'] = true;
-        foreach($this->read($data['id_user'])[0] as $key => $value){
-            $_SESSION[$key] = $value;
+        if($this->verifySesionUser())
+        {
+            $_SESSION['logged'] = true;
+            foreach($this->read($id_user)[0] as $key => $value){
+                if($key != 'password'){
+                    
+                    $_SESSION[$key] = $value;
+                }
+            }
         }
+        
 
+    }
+
+    private function verifySesionUser()
+    {
+        if(
+            $_SESSION['logged'] &&
+            isset($_SESSION['name']) &&
+            isset($_SESSION['email']) 
+            ) // User logged
+        {
+            return false;
+        } else 
+        {
+            return true;
+        }
     }
 
     public function createCookie($data = array())
@@ -258,7 +281,7 @@ class User extends Controller
      */ 
     public function setName($name)
     {
-        $this->name = $name;
+        $this->name = !empty($name)? $name : null;
 
     }
 
@@ -277,7 +300,7 @@ class User extends Controller
      */ 
     public function setEmail($email)
     {
-        $this->email = $email;
+        $this->email = !empty($email)? $email : null;
 
     }
 
@@ -296,6 +319,8 @@ class User extends Controller
      */ 
     public function setPassword($password)
     {
+        $password = !empty($password)? $password : null;
+
         $this->password = password_hash($password, PASSWORD_DEFAULT);
 
     }
@@ -315,7 +340,7 @@ class User extends Controller
      */ 
     public function setPhoto($photo)
     {
-
+        $photo = !empty($photo)? $photo : null;
         $this->photo = $this->savePhoto($photo, 'user');
 
     }
@@ -333,9 +358,9 @@ class User extends Controller
      *
      * 
      */ 
-    public function setStatus($status = null)
+    public function setStatus($status)
     {
-        $this->status = $status;
+        $this->status = !empty($status)? $status: null;
 
     }
 }
