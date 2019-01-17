@@ -8,7 +8,7 @@ class Controller
     {
             
         $img = array();
-        if(!empty($images))
+        if(!empty($images['name']))
         {
             for ($i = 0; $i < count($images['name']); $i++) {
                 $name = (count($images['name']) == 1)?$images['name'] : $images['name'][$i] ;
@@ -23,16 +23,11 @@ class Controller
                 } else {
     
                     $img[] = $finalName;
+                    return $img;
                 }
             }
-        }else 
-        {
-            throw new \Exception("Você não realizou o upload de forma satisfatória.");
         }
 
-        return $img;
-        
-        
     }
 
 }

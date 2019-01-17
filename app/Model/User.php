@@ -8,8 +8,7 @@ use App\Controller\Controller;
 class User extends Controller
 {
     const COOKIE = 'CKE';
-    private $id_user,
-            $name,
+    private $name,
             $email,
             $password,
             $photo = "uploads/img/user/sem-foto.jpg",
@@ -30,11 +29,10 @@ class User extends Controller
     }
     public function create($data = array())
     {
-        $this->setName();
-        $this->setEmail();
-        $this->setPassword();
-        $this->setPhoto(!empty($_FILES['photo'])? $_FILES['photo']: null);
-        $this->setStatus(!empty($data['status'])? $data['status'] : null);
+        $this->setName($data['name']);
+        $this->setEmail($data['email']);
+        $this->setPassword($data['password']);
+        $this->setPhoto($_FILES['photo']);
         $sql = new Sql();
 
         $result = $sql->select("SELECT email FROM tb_user WHERE email = :email",[
@@ -50,19 +48,19 @@ class User extends Controller
                 ":name" => $this->getName(),
                 ":email" => $this->getEmail(),
                 ":password" => $this->getPassword(),
-                ":photo" => $this->getPhoto()[0],
-                ":status" => $this->getStatus()
+                ":photo" => $this->getPhoto(),
+                ":status" => $data['status']
             ]);
         }
     }
 
     public function read($id_user = null)
     {
-        $this->setId_user($id_user);
+
         $sql = new Sql();
         
         return $sql->select("CALL read_user(:id_user)",[
-            ":id_user" => $this->getId_user()
+            ":id_user" => $id_user
         ]);   
     }
 
@@ -70,16 +68,16 @@ class User extends Controller
     {
         $sql = new Sql();
 
-        $this->setId_user($id_user);
+        
         // Verificar se existe imagem no $_FILES
-        if(!empty($_FILES['photo'])){
-            $this->setPhoto(!empty($_FILES['photo'])? $_FILES['photo']: null);
+        if(!empty($_FILES['photo']['name'])){
+            $this->setPhoto($_FILES['photo']);
 
             $sql->query("UPDATE tb_user 
                 SET photo = :photo
                 WHERE id_user = :id_user",[
                 ":photo" => $this->getPhoto(),
-                ":id_user" => $this->getId_user()
+                ":id_user" => $id_user
             ]);
         } 
         // Para cada campo faça um update
@@ -92,7 +90,7 @@ class User extends Controller
                         SET $key = :value
                         WHERE id_user = :id_user",[
                 ":value" => $value,
-                ":id_user" => $this->getId_user()
+                ":id_user" => $id_user
             ]);
            
                 
@@ -204,7 +202,7 @@ class User extends Controller
                 }
             }
         }
-        
+
 
     }
 
@@ -245,25 +243,6 @@ class User extends Controller
         $sql->query("CALL delete_user(:id_user)",[
             ":id_user" => $id_user
         ]);
-    }
-
-    /**
-     * Get the value of id_user
-     */ 
-    public function getId_user()
-    {
-        return $this->id_user;
-    }
-
-    /**
-     * Set the value of id_user
-     *
-     * 
-     */ 
-    public function setId_user($id_user)
-    {
-        $this->id_user = $id_user;
-
     }
 
     /**
@@ -340,27 +319,8 @@ class User extends Controller
      */ 
     public function setPhoto($photo)
     {
-        $photo = !empty($photo)? $photo : null;
-        $this->photo = $this->savePhoto($photo, 'user');
+        $this->photo = (!empty($photo))? $this->savePhoto($photo, 'user') : null;      
 
     }
 
-    /**
-     * Get the value of status
-     */ 
-    public function getStatus()
-    {
-        return (!empty($this->status))? $this->status : null;
-    }
-
-    /**
-     * Set the value of status
-     *
-     * 
-     */ 
-    public function setStatus($status)
-    {
-        $this->status = !empty($status)? $status: null;
-
-    }
 }
